@@ -1,5 +1,6 @@
 import {Platform} from 'react-native';
 import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import {log} from './logger';
 
 export const requestLocationPermission = ({
   onGranted,
@@ -169,4 +170,4 @@ function calculateDistance(
 
 // Generate the GPX file
 const gpxContent = generateGPXFile();
-console.log(gpxContent);
+log(gpxContent);

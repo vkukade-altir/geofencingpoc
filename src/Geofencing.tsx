@@ -10,17 +10,55 @@ import {
   Text,
   View,
 } from 'react-native';
-import MapView, {Circle, Marker} from 'react-native-maps';
+import MapView, {Circle, Marker, Polygon} from 'react-native-maps';
 import BackgroundGeolocation, {
   GeofenceEvent,
   Location,
 } from 'react-native-background-geolocation';
 import haversine from 'haversine';
 import {isWithinRange} from './helpers';
-import {AndroidStationCoordinates, IOSStationCoordinates} from './constants';
-// import BackgroundFetch from 'react-native-background-fetch';
+import {log, warn, logError} from './logger';
 import {State} from './react-native-background-geolocation';
 import {findOverlappingPairs} from './mapOverlap';
+import {
+  EVChargingStation,
+  getAllStations,
+  Station,
+  Amenity,
+} from './stationData';
+import BackgroundFetch from 'react-native-background-fetch';
+import {
+  onStationEnter,
+  onStationExit,
+  processLocation,
+  setAmenityEventCallback,
+  clearAmenityEventCallback,
+  AmenityEvent,
+  isTrackingActive,
+  getDebugInfo,
+  distanceToAmenity,
+  restoreState,
+  getCurrentStationId,
+} from './amenityTracker';
+
+// ============================================
+// BACKGROUND GEOLOCATION CONFIG PROFILES
+// ============================================
+
+// stopTimeout is in MINUTES (1 = device marked stationary after 1 min without movement)
+// Battery-efficient config (outside stations)
+const CONFIG_BATTERY_EFFICIENT = {
+  distanceFilter: 10,
+  stopTimeout: 1,
+  heartbeatInterval: 60,
+};
+
+// Aggressive tracking config (inside stations for amenity detection)
+const CONFIG_STATION_TRACKING = {
+  distanceFilter: 2,
+  stopTimeout: 1, // 1 minute — for stationary + heartbeat testing
+  heartbeatInterval: 15,
+};
 
 const GEOFENCE_RADIUS_METERS = 100;
 
@@ -31,6 +69,22 @@ const STATION_FENCE_RING = [
   {stroke: 'rgba(22, 163, 74, 0.95)', fill: 'rgba(22, 163, 74, 0.14)'},
   {stroke: 'rgba(126, 34, 206, 0.95)', fill: 'rgba(126, 34, 206, 0.14)'},
 ] as const;
+
+const AMENITY_COLORS = {
+  cafe: {stroke: 'rgba(251, 146, 60, 0.95)', fill: 'rgba(251, 146, 60, 0.25)'},
+  restroom: {
+    stroke: 'rgba(168, 85, 247, 0.95)',
+    fill: 'rgba(168, 85, 247, 0.25)',
+  },
+  charging_bay_a: {
+    stroke: 'rgba(56, 189, 248, 0.95)',
+    fill: 'rgba(56, 189, 248, 0.25)',
+  },
+  default: {
+    stroke: 'rgba(156, 163, 175, 0.95)',
+    fill: 'rgba(156, 163, 175, 0.25)',
+  },
+} as const;
 
 const WINDOW_H = Dimensions.get('window').height;
 const HISTORY_PANEL_H = Math.min(200, Math.round(WINDOW_H * 0.22));
@@ -69,9 +123,25 @@ function computeInitialRegion(
   };
 }
 
+// Event log item type
+interface EventLogItem {
+  id: string;
+  type: 'station' | 'amenity';
+  action: 'entry' | 'exit';
+  identifier: string;
+  name: string;
+  lat: number;
+  lon: number;
+  distance: number;
+  accuracy?: number;
+  timestamp: Date;
+}
+
 export const Geofencing = () => {
   const mapRef = useRef<MapView>(null);
   const trackThrottleRef = useRef(0);
+  const geofencesReadyRef = useRef(false);
+  const registerGeofencesRef = useRef<(() => Promise<void>) | null>(null);
   const [trackMap, setTrackMap] = useState(false);
 
   const [enabled, setEnabled] = useState(false);
@@ -79,18 +149,23 @@ export const Geofencing = () => {
   const [geofenceEvent, setGeofenceEvent] =
     React.useState<GeofenceEvent | null>(null);
 
-  const [pings, setPings] = useState<
-    {
-      stationId: string;
-      action: 'entry' | 'exit';
-      lat: number;
-      long: number;
-      haversineDistance: number;
-    }[]
-  >([]);
+  // Combined event log for stations and amenities
+  const [eventLog, setEventLog] = useState<EventLogItem[]>([]);
 
-  const stationCoordinates =
-    Platform.OS === 'ios' ? IOSStationCoordinates : AndroidStationCoordinates;
+  // Current station being tracked (for amenity display)
+  const [currentStationId, setCurrentStationId] = useState<string | null>(null);
+
+  // Get stations from new data structure
+  const stations = useMemo(() => getAllStations(), []);
+  const stationCoordinates = useMemo(
+    () =>
+      stations.map(s => ({
+        id: s.id,
+        latitude: s.latitude,
+        longitude: s.longitude,
+      })),
+    [stations],
+  );
 
   const stationsForOverlap = useMemo(
     () =>
@@ -113,6 +188,12 @@ export const Geofencing = () => {
     [stationsForOverlap],
   );
 
+  // Current station data for amenity display
+  const currentStation = useMemo(() => {
+    if (!currentStationId) return null;
+    return stations.find(s => s.id === currentStationId) || null;
+  }, [currentStationId, stations]);
+
   const fenceDistanceLine = useMemo(() => {
     if (
       location?.coords?.latitude == null ||
@@ -122,261 +203,397 @@ export const Geofencing = () => {
     }
     const lat = location.coords.latitude;
     const lon = location.coords.longitude;
-    return stationCoordinates
-      .map(s => {
-        const d = haversine(
-          {latitude: s.latitude, longitude: s.longitude},
-          {latitude: lat, longitude: lon},
-          {unit: 'meter'},
-        );
-        const inside = d <= GEOFENCE_RADIUS_METERS;
-        return `${s.id}: ${d.toFixed(0)} m (${inside ? 'inside' : 'outside'})`;
-      })
-      .join(' · ');
+
+    // Show distance to stations
+    const stationDistances = stationCoordinates.map(s => {
+      const d = haversine(
+        {latitude: s.latitude, longitude: s.longitude},
+        {latitude: lat, longitude: lon},
+        {unit: 'meter'},
+      );
+      const inside = d <= GEOFENCE_RADIUS_METERS;
+      return `${s.id}: ${d.toFixed(0)}m (${inside ? 'inside' : 'outside'})`;
+    });
+
+    return stationDistances.join(' · ');
   }, [location, stationCoordinates]);
 
-  const geofences = stationCoordinates.map(eachCordinate => {
-    return {
-      identifier: eachCordinate.id,
-      radius: GEOFENCE_RADIUS_METERS,
-      latitude: eachCordinate.latitude,
-      longitude: eachCordinate.longitude,
-      notifyOnEntry: true,
-      notifyOnExit: true,
-    };
-  });
+  // Amenity distance line when inside a station
+  const amenityDistanceLine = useMemo(() => {
+    if (
+      !currentStation ||
+      location?.coords?.latitude == null ||
+      location?.coords?.longitude == null
+    ) {
+      return null;
+    }
 
-  /// Clear all markers when plugin is toggled off.
+    const locUpdate = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      accuracy: location.coords.accuracy || 10,
+    };
+
+    return currentStation.amenities
+      .map(a => {
+        const d = distanceToAmenity(locUpdate, a);
+        const inside =
+          a.type === 'circle' ? d <= (a.radiusMeters || 20) : false; // Polygon check would need Turf
+        return `${a.name}: ${d.toFixed(0)}m`;
+      })
+      .join(' · ');
+  }, [location, currentStation]);
+
+  const geofences = useMemo(
+    () =>
+      stationCoordinates.map(coord => {
+        const station = stations.find(s => s.id === coord.id);
+        return {
+          identifier: coord.id,
+          radius: station?.radiusMeters || GEOFENCE_RADIUS_METERS,
+          latitude: coord.latitude,
+          longitude: coord.longitude,
+          notifyOnEntry: true,
+          notifyOnExit: true,
+        };
+      }),
+    [stationCoordinates, stations],
+  );
+
   const clearMarkers = () => {
     setLocation(null);
     setGeofenceEvent(null);
-    setPings([]);
+    setEventLog([]);
+    setCurrentStationId(null);
   };
 
-  const onGeofence = () => {
-    if (!geofenceEvent) {
-      return;
-    }
-    const location: Location = geofenceEvent.location;
-    const marker = geofences.find((m: any) => {
-      return m.identifier === geofenceEvent.identifier;
-    });
+  // Handle station geofence events
+  const handleGeofenceEvent = (event: GeofenceEvent) => {
+    const loc: Location = event.location;
+    const marker = geofences.find(m => m.identifier === event.identifier);
 
     if (!marker) {
-      console.log('Error: Geofence not found');
+      log('Error: Geofence not found');
       return;
     }
 
     const haversinDistance = haversine(
-      {
-        latitude: marker.latitude,
-        longitude: marker.longitude,
-      },
-      {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      },
+      {latitude: marker.latitude, longitude: marker.longitude},
+      {latitude: loc.coords.latitude, longitude: loc.coords.longitude},
       {unit: 'meter'},
     );
 
     const isGeofencingCorrect = isWithinRange(
       haversinDistance,
-      GEOFENCE_RADIUS_METERS,
+      marker.radius,
       50,
     );
 
-    console.log('geofenceEvent', geofenceEvent);
-    console.log('isGeofencingCorrect', isGeofencingCorrect);
+    log('geofenceEvent', event);
+    log('isGeofencingCorrect', isGeofencingCorrect);
 
-    if (geofenceEvent.action === 'ENTER') {
-      console.log('✅✅ Geofence Enter', marker.identifier);
-      setPings(prevPings => [
-        ...prevPings,
-        {
-          stationId: marker.identifier,
-          action: 'entry',
-          lat: location.coords.latitude,
-          long: location.coords.longitude,
-          haversineDistance: haversinDistance,
-        },
-      ]);
-    } else if (geofenceEvent.action === 'EXIT') {
-      console.log('❌❌ Geofence Exit', marker.identifier);
-      setPings(prevPings => [
-        ...prevPings,
-        {
-          stationId: marker.identifier,
-          action: 'exit',
-          lat: location.coords.latitude,
-          long: location.coords.longitude,
-          haversineDistance: haversinDistance,
-        },
-      ]);
+    const isEntry = event.action === 'ENTER';
+    const logItem: EventLogItem = {
+      id: `station-${Date.now()}-${event.identifier}`,
+      type: 'station',
+      action: isEntry ? 'entry' : 'exit',
+      identifier: event.identifier,
+      name: event.identifier,
+      lat: loc.coords.latitude,
+      lon: loc.coords.longitude,
+      distance: haversinDistance,
+      accuracy: loc.coords.accuracy,
+      timestamp: new Date(),
+    };
+
+    setEventLog(prev => [...prev, logItem]);
+
+    if (isEntry) {
+      log('✅✅ Station ENTER:', event.identifier);
+      setCurrentStationId(event.identifier);
+      onStationEnter(event.identifier);
+
+      // Switch to aggressive tracking config for amenity detection
+      log('[Config] Switching to station tracking mode');
+      BackgroundGeolocation.setConfig({
+        distanceFilter: CONFIG_STATION_TRACKING.distanceFilter,
+        stopTimeout: CONFIG_STATION_TRACKING.stopTimeout,
+        heartbeatInterval: CONFIG_STATION_TRACKING.heartbeatInterval,
+      });
+    } else {
+      log('❌❌ Station EXIT:', event.identifier);
+      onStationExit(event.identifier);
+      setCurrentStationId(null);
+
+      // Switch back to battery-efficient config
+      log('[Config] Switching to battery-efficient mode');
+      BackgroundGeolocation.setConfig({
+        distanceFilter: CONFIG_BATTERY_EFFICIENT.distanceFilter,
+        stopTimeout: CONFIG_BATTERY_EFFICIENT.stopTimeout,
+        heartbeatInterval: CONFIG_BATTERY_EFFICIENT.heartbeatInterval,
+      });
     }
-    console.log(
-      'Cordinates - lat,long',
-      location.coords.latitude,
-      location.coords.longitude,
+
+    log(
+      'Coordinates - lat,long',
+      loc.coords.latitude,
+      loc.coords.longitude,
     );
-    console.log('haversine distance should be close to 50 m', haversinDistance);
-    //for entry and exit make the api call for geofence
+    log('haversine distance to station center', haversinDistance);
   };
 
   useEffect(() => {
     if (!geofenceEvent) {
       return;
     }
-    onGeofence();
+    handleGeofenceEvent(geofenceEvent);
   }, [geofenceEvent]);
 
-  /// Collection of BackgroundGeolocation event-subscriptions.
   const subscriptions: any[] = [];
 
-  /// [Helper] Add a BackgroundGeolocation event subscription to collection
   const subscribe = (subscription: any) => {
     subscriptions.push(subscription);
   };
 
-  /// [Helper] Iterate BackgroundGeolocation subscriptions and .remove() each.
   const unsubscribe = () => {
     subscriptions.forEach((subscription: any) => subscription.remove());
     subscriptions.splice(0, subscriptions.length);
   };
 
   const initBackgroundFetch = async () => {
-    // BackgroundFetch.configure(
-    //   {
-    //     minimumFetchInterval: 15,
-    //     enableHeadless: true,
-    //     stopOnTerminate: false,
-    //   },
-    //   async taskId => {
-    //     console.log('[BackgroundFetch]', taskId);
-    //     const locationData = await BackgroundGeolocation.getCurrentPosition({
-    //       extras: {
-    //         event: 'background-fetch',
-    //       },
-    //       maximumAge: 10000,
-    //       persist: true,
-    //       timeout: 30,
-    //       samples: 2,
-    //     });
-    //     console.log('BACKGROUND FETCH: [getCurrentPosition]', locationData);
-    //     BackgroundFetch.finish(taskId);
-    //   },
-    //   async taskId => {
-    //     console.log('[BackgroundFetch] TIMEOUT:', taskId);
-    //     BackgroundFetch.finish(taskId);
-    //   },
-    // );
+    BackgroundFetch.configure(
+      {
+        minimumFetchInterval: 15,
+        enableHeadless: true,
+        stopOnTerminate: false,
+      },
+      async taskId => {
+        log('[BackgroundFetch]', taskId);
+        const location = await BackgroundGeolocation.getCurrentPosition({
+          extras: {
+            event: 'background-fetch',
+          },
+          maximumAge: 10000,
+          persist: true,
+          timeout: 30,
+          samples: 2,
+        });
+        log('BACKGROUND FETCH: [getCurrentPosition]', location);
+        BackgroundFetch.finish(taskId);
+      },
+      async taskId => {
+        log('[BackgroundFetch] TIMEOUT:', taskId);
+        BackgroundFetch.finish(taskId);
+      },
+    );
   };
 
   useEffect(() => {
+    // Set up amenity event callback
+    setAmenityEventCallback((event: AmenityEvent) => {
+      const logItem: EventLogItem = {
+        id: `amenity-${Date.now()}-${event.amenityId}`,
+        type: 'amenity',
+        action: event.type === 'AMENITY_ENTER' ? 'entry' : 'exit',
+        identifier: event.amenityId,
+        name: event.amenityName,
+        lat: event.location.latitude,
+        lon: event.location.longitude,
+        distance: 0,
+        accuracy: event.location.accuracy,
+        timestamp: new Date(event.timestamp),
+      };
+
+      setEventLog(prev => [...prev, logItem]);
+      log('[UI] Amenity event:', event.type, event.amenityName);
+    });
+
+    // Try to restore amenity tracking state (in case app was killed while inside station)
+    const wasRestored = restoreState();
+    if (wasRestored && isTrackingActive()) {
+      log('[Init] Restored amenity tracking state from persistence');
+      // We're inside a station, set the UI state and switch to aggressive config
+      // Note: We'd need to get the station ID from the restored state
+      // For now, the tracking will work, UI update will happen on next geofence event
+    }
+
     (async () => {
-      //get latest enabled value and set it
       BackgroundGeolocation.getState().then((state: State) => {
-        console.log('Latest enable state', state.enabled);
+        log('Latest enable state', state.enabled);
         setEnabled(state.enabled);
       });
 
-      //Subscribe to events.
-      console.log('subscribing to events');
+      log('subscribing to events');
       subscribe(BackgroundGeolocation.onEnabledChange(setEnabled));
       subscribe(
         BackgroundGeolocation.onLocation(
           locationData => {
-            console.log(
-              'Lattitude, Longitude',
+            log(
+              'Location:',
               locationData.coords.latitude,
               locationData.coords.longitude,
+              locationData.coords.accuracy,
             );
             setLocation(locationData);
+
+            // Process location for amenity tracking if inside a station
+            if (isTrackingActive()) {
+              processLocation({
+                latitude: locationData.coords.latitude,
+                longitude: locationData.coords.longitude,
+                accuracy: locationData.coords.accuracy || 10,
+                timestamp: String(locationData.timestamp),
+              });
+            }
           },
           error => {
-            console.warn('[onLocation] ERROR: ', error);
+            warn('[onLocation] ERROR:', error);
           },
         ),
       );
       subscribe(
         BackgroundGeolocation.onMotionChange(event => {
-          // console.log('[onMotionChange]', event);
+          log('[onMotionChange]', event.isMoving);
         }),
       );
       subscribe(
         BackgroundGeolocation.onGeofence(event => {
-          console.log('event', event);
+          log('geofence event', event);
           setGeofenceEvent(event);
         }),
       );
       subscribe(
         BackgroundGeolocation.onActivityChange(event => {
-          // console.log('[onActivityChange]', event);
+          // log('[onActivityChange]', event);
         }),
       );
       subscribe(
         BackgroundGeolocation.onProviderChange(event => {
-          // console.log('[onProviderChange]', event);
+          // log('[onProviderChange]', event);
         }),
       );
-      /// 2. ready the plugin.
-      console.log('Making BackgroundGeolocation ready with config');
 
-      // initBackgroundFetch();
+      // Heartbeat subscription - fires periodically when stationary
+      // Critical for amenity detection when user is not moving
+      subscribe(
+        BackgroundGeolocation.onHeartbeat(async event => {
+          const insideStation = isTrackingActive();
+          const stationId = getCurrentStationId();
+          const eventLat = event?.location?.coords?.latitude;
+          const eventLon = event?.location?.coords?.longitude;
+          log('[onHeartbeat] HEARTBEAT RECEIVED', {
+            timestamp: new Date().toISOString(),
+            insideStation,
+            stationId,
+            eventLat,
+            eventLon,
+          });
+
+          // Only get position if we're inside a station
+          if (insideStation) {
+            try {
+              const pos = await BackgroundGeolocation.getCurrentPosition({
+                samples: 1,
+                persist: true,
+                timeout: 30,
+                extras: {event: 'heartbeat'},
+              });
+
+              log(
+                '[onHeartbeat] Got position:',
+                pos.coords.latitude,
+                pos.coords.longitude,
+                pos.coords.accuracy,
+              );
+
+              setLocation(pos);
+
+              // Process for amenity tracking
+              processLocation({
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+                accuracy: pos.coords.accuracy || 10,
+                timestamp: String(pos.timestamp),
+              });
+            } catch (error) {
+              warn('[onHeartbeat] Failed to get position:', error);
+            }
+          } else {
+            log(
+              '[onHeartbeat] ❤️ Heartbeat received but not inside a station — amenity check skipped',
+            );
+          }
+        }),
+      );
+
+      log('Making BackgroundGeolocation ready with config');
+
+      initBackgroundFetch();
 
       const state: State = await BackgroundGeolocation.ready({
         reset: false,
         logger: {
-          debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
+          debug: true,
           logLevel: BackgroundGeolocation.LogLevel.Verbose,
         },
         geolocation: {
           desiredAccuracy: BackgroundGeolocation.DesiredAccuracy.High,
-          distanceFilter: 5, // Lower = more frequent location updates
-          stopTimeout: 1, // Faster transition to stationary
+          distanceFilter: CONFIG_BATTERY_EFFICIENT.distanceFilter,
+          stopTimeout: CONFIG_BATTERY_EFFICIENT.stopTimeout,
           locationAuthorizationRequest: 'Always',
-          geofenceProximityRadius: 1000, // Keep all geofences active within 1km
-          geofenceInitialTriggerEntry: false, // Don't fire ENTER if already inside on registration
+          geofenceProximityRadius: 1000,
+          geofenceInitialTriggerEntry: true,
         },
         app: {
-          stopOnTerminate: false, // <-- Allow the background-service to continue tracking when user closes the app.
-          startOnBoot: true, // <-- Auto start tracking when device is powered-up.,
+          stopOnTerminate: false,
+          startOnBoot: true,
           enableHeadless: true,
+          heartbeatInterval: CONFIG_BATTERY_EFFICIENT.heartbeatInterval,
           backgroundPermissionRationale: {
             title:
               "Allow {applicationName} to access this device's location even when closed or not in use.",
             message:
-              'We require your location even when app is closed or not in use to recommend you offers based on places you visit.',
+              'We require your location even when app is closed or not in use to track your visits to EV charging stations and amenities.',
             positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
             negativeAction: 'Cancel',
           },
         },
         http: {
-          autoSync: true, // <-- [Default: true] Set true to sync each location to server as it arrives.
-          //url: 'http://yourserver.com/locations',
+          autoSync: true,
         },
         persistence: {
           maxDaysToPersist: 14,
         },
       });
+      const registerGeofences = async () => {
+        if (geofencesReadyRef.current) {
+          return;
+        }
+        log('[Geofences] Registering station geofences:', geofences.length);
+        await BackgroundGeolocation.addGeofences(geofences);
+        geofencesReadyRef.current = true;
+        log(
+          '[Geofences] Registration complete (initialTriggerEntry=true — ENTER fires if already inside)',
+        );
+      };
+      registerGeofencesRef.current = registerGeofences;
+
+      // Await geofence registration before tracking can miss station 1
+      try {
+        await registerGeofences();
+      } catch (error) {
+        logError('[Geofences] Registration failed:', error);
+      }
+
       setEnabled(state.enabled);
-      console.log('state.enabled value: ', state.enabled);
-      console.log(
-        'Ready Success : Now adding geofence for all stations with 50 m radius',
-      );
-      BackgroundGeolocation.addGeofences(geofences)
-        .then(() => {
-          console.log('Success: Geofence created for station1');
-        })
-        .catch(error => {
-          console.log('Error: Error while creating geofences');
-        });
+      log('state.enabled value:', state.enabled);
 
       return () => {
-        // Remove BackgroundGeolocation event-subscribers when the View is removed or refreshed
-        // during development live-reload.  Without this, event-listeners will accumulate with
-        // each refresh during live-reload.
+        geofencesReadyRef.current = false;
+        registerGeofencesRef.current = null;
         unsubscribe();
         clearMarkers();
+        clearAmenityEventCallback();
       };
     })();
   }, []);
@@ -405,21 +622,28 @@ export const Geofencing = () => {
       {
         latitude,
         longitude,
-        latitudeDelta: 0.008,
-        longitudeDelta: 0.008,
+        latitudeDelta: 0.004,
+        longitudeDelta: 0.004,
       },
       350,
     );
   }, [location, trackMap]);
 
   const onEnableSwitchToggle = async (value: boolean) => {
-    setEnabled(value);
     if (value) {
-      // Use start() for full location tracking - more responsive geofence events
-      // Note: startGeofences() is lower power but iOS delays EXIT events significantly
-      BackgroundGeolocation.start();
+      try {
+        if (!geofencesReadyRef.current && registerGeofencesRef.current) {
+          await registerGeofencesRef.current();
+        }
+        await BackgroundGeolocation.start();
+        setEnabled(true);
+      } catch (error) {
+        logError('[Geofencing] Failed to start tracking:', error);
+        setEnabled(false);
+      }
     } else {
-      BackgroundGeolocation.stop();
+      await BackgroundGeolocation.stop();
+      setEnabled(false);
     }
   };
 
@@ -467,25 +691,49 @@ export const Geofencing = () => {
         {
           latitude: lat,
           longitude: lon,
-          latitudeDelta: 0.025,
-          longitudeDelta: 0.025,
+          latitudeDelta: 0.006,
+          longitudeDelta: 0.006,
         },
         400,
       );
     }
   }
 
-  const lastEventLabel =
-    geofenceEvent != null
-      ? `${geofenceEvent.action} · ${geofenceEvent.identifier}`
-      : null;
+  function fitMapToStation() {
+    if (!currentStation) return;
+    mapRef.current?.animateToRegion(
+      {
+        latitude: currentStation.latitude,
+        longitude: currentStation.longitude,
+        latitudeDelta: 0.003,
+        longitudeDelta: 0.003,
+      },
+      400,
+    );
+  }
+
+  const lastEventLabel = useMemo(() => {
+    if (eventLog.length === 0) return null;
+    const last = eventLog[eventLog.length - 1];
+    const actionStr = last.action === 'entry' ? 'ENTER' : 'EXIT';
+    const typeIcon = last.type === 'station' ? '📍' : '🏪';
+    return `${typeIcon} ${actionStr} · ${last.name}`;
+  }, [eventLog]);
+
+  // Get amenity color
+  const getAmenityColor = (amenityId: string) => {
+    return (
+      AMENITY_COLORS[amenityId as keyof typeof AMENITY_COLORS] ||
+      AMENITY_COLORS.default
+    );
+  };
 
   return (
     <View style={styles.root}>
       <View style={styles.bodyTop}>
-        <Text style={styles.title}>Geofence demo</Text>
+        <Text style={styles.title}>Station + Amenity Tracker</Text>
         <Text style={styles.subtitle}>
-          Hyderabad · {GEOFENCE_RADIUS_METERS} m Apple MapKit preview (iOS)
+          {GEOFENCE_RADIUS_METERS}m station geofence · Turf.js amenity detection
         </Text>
 
         <View style={styles.statusRow}>
@@ -495,16 +743,23 @@ export const Geofencing = () => {
               enabled ? styles.statusOn : styles.statusOff,
             ]}>
             <Text style={styles.statusPillText}>
-              {enabled ? 'Monitoring ON' : 'Monitoring OFF'}
+              {enabled ? 'Tracking ON' : 'Tracking OFF'}
             </Text>
           </View>
-          {lastEventLabel ? (
+          {currentStationId && (
+            <View style={[styles.statusPill, styles.statusStation]}>
+              <Text style={styles.statusPillText}>
+                📍 Inside: {currentStationId}
+              </Text>
+            </View>
+          )}
+          {lastEventLabel && (
             <Text style={styles.lastEvent}>{lastEventLabel}</Text>
-          ) : null}
+          )}
         </View>
 
         <View style={styles.enableCard}>
-          <Text style={styles.enableLabel}>Enable geofencing</Text>
+          <Text style={styles.enableLabel}>Enable tracking</Text>
           <Switch value={enabled} onValueChange={onEnableSwitchToggle} />
         </View>
 
@@ -517,44 +772,66 @@ export const Geofencing = () => {
                   6,
                 )}, ${location.coords.longitude.toFixed(6)}${
                   location.coords.accuracy != null
-                    ? `  ·  ±${location.coords.accuracy.toFixed(0)} m`
+                    ? `  ·  ±${location.coords.accuracy.toFixed(0)}m`
                     : ''
                 }`
               : 'Waiting for location…'}
           </Text>
-          {fenceDistanceLine != null ? (
+          {fenceDistanceLine != null && (
             <Text style={styles.metaFenceDist}>{fenceDistanceLine}</Text>
-          ) : null}
+          )}
+          {amenityDistanceLine != null && (
+            <Text style={styles.metaAmenityDist}>
+              Amenities: {amenityDistanceLine}
+            </Text>
+          )}
         </View>
 
         <View style={[styles.historyPanel, {height: HISTORY_PANEL_H}]}>
-          <Text style={styles.sectionTitle}>Geofence activity</Text>
+          <Text style={styles.sectionTitle}>Activity log</Text>
           <FlatList
-            data={[...pings].reverse()}
+            data={[...eventLog].reverse()}
             style={styles.logBox}
             contentContainerStyle={styles.logBoxContent}
             showsVerticalScrollIndicator
             ListEmptyComponent={
               <Text style={styles.logEmpty}>
-                No enter/exit events yet. Toggle monitoring and move between
-                zones.
+                No events yet. Enable tracking and enter a station zone.
               </Text>
             }
-            keyExtractor={(item, index) =>
-              `${index}-${item.stationId}-${item.action}-${item.lat}`
-            }
+            keyExtractor={item => item.id}
             renderItem={({item}) => (
               <View style={styles.logRow}>
-                <Text
-                  style={[
-                    styles.logAction,
-                    item.action === 'entry' ? styles.logEntry : styles.logExit,
-                  ]}>
-                  {item.action === 'entry' ? 'ENTER' : 'EXIT'}
-                </Text>
+                <View style={styles.logHeader}>
+                  <Text
+                    style={[
+                      styles.logAction,
+                      item.action === 'entry'
+                        ? styles.logEntry
+                        : styles.logExit,
+                    ]}>
+                    {item.action === 'entry' ? 'ENTER' : 'EXIT'}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.logType,
+                      item.type === 'station'
+                        ? styles.logTypeStation
+                        : styles.logTypeAmenity,
+                    ]}>
+                    {item.type === 'station' ? '📍 Station' : '🏪 Amenity'}
+                  </Text>
+                </View>
+                <Text style={styles.logName}>{item.name}</Text>
                 <Text style={styles.logDetail}>
-                  {item.stationId} · {item.haversineDistance.toFixed(1)} m ·{' '}
-                  {item.lat.toFixed(5)}, {item.long.toFixed(5)}
+                  {item.lat.toFixed(5)}, {item.lon.toFixed(5)}
+                  {item.accuracy ? ` · ±${item.accuracy.toFixed(0)}m` : ''}
+                  {item.type === 'station'
+                    ? ` · ${item.distance.toFixed(1)}m from center`
+                    : ''}
+                </Text>
+                <Text style={styles.logTime}>
+                  {item.timestamp.toLocaleTimeString()}
                 </Text>
               </View>
             )}
@@ -571,7 +848,8 @@ export const Geofencing = () => {
           showsBuildings={Platform.OS === 'ios'}
           initialRegion={defaultMapRegion}
           showsUserLocation>
-          {stationCoordinates.map((station, index) => {
+          {/* Station geofence circles */}
+          {stations.map((station, index) => {
             const ring = STATION_FENCE_RING[index % STATION_FENCE_RING.length];
             return (
               <Circle
@@ -580,25 +858,85 @@ export const Geofencing = () => {
                   latitude: station.latitude,
                   longitude: station.longitude,
                 }}
-                radius={GEOFENCE_RADIUS_METERS}
+                radius={station.radiusMeters}
                 strokeWidth={2}
                 strokeColor={ring.stroke}
                 fillColor={ring.fill}
               />
             );
           })}
-          {stationCoordinates.map((station, index) => (
+
+          {/* Station markers */}
+          {stations.map((station, index) => (
             <Marker
               key={station.id}
               coordinate={{
                 latitude: station.latitude,
                 longitude: station.longitude,
               }}
-              title={station.id}
-              description={`${GEOFENCE_RADIUS_METERS} m geofence`}
+              title={station.name}
+              description={`${station.radiusMeters}m geofence · ${station.amenities.length} amenities`}
               pinColor={STATION_PIN_COLORS[index % STATION_PIN_COLORS.length]}
             />
           ))}
+
+          {/* Amenity circles and polygons (always visible) */}
+          {stations.map(station =>
+            station.amenities.map(amenity => {
+              const color = getAmenityColor(amenity.id);
+
+              if (amenity.type === 'circle') {
+                return (
+                  <Circle
+                    key={`${station.id}-${amenity.id}`}
+                    center={{
+                      latitude: amenity.latitude,
+                      longitude: amenity.longitude,
+                    }}
+                    radius={amenity.radiusMeters || 20}
+                    strokeWidth={2}
+                    strokeColor={color.stroke}
+                    fillColor={color.fill}
+                  />
+                );
+              } else if (amenity.type === 'polygon' && amenity.polygon) {
+                return (
+                  <Polygon
+                    key={`${station.id}-${amenity.id}`}
+                    coordinates={amenity.polygon.map(([lon, lat]) => ({
+                      latitude: lat,
+                      longitude: lon,
+                    }))}
+                    strokeWidth={2}
+                    strokeColor={color.stroke}
+                    fillColor={color.fill}
+                  />
+                );
+              }
+              return null;
+            }),
+          )}
+
+          {/* Amenity markers */}
+          {stations.map(station =>
+            station.amenities.map(amenity => (
+              <Marker
+                key={`marker-${station.id}-${amenity.id}`}
+                coordinate={{
+                  latitude: amenity.latitude,
+                  longitude: amenity.longitude,
+                }}
+                title={amenity.name}
+                description={
+                  amenity.type === 'circle'
+                    ? `${amenity.radiusMeters}m radius`
+                    : 'Polygon area'
+                }
+                pinColor="orange"
+                opacity={0.9}
+              />
+            )),
+          )}
         </MapView>
         <View style={styles.mapOverlay} pointerEvents="box-none">
           <Pressable
@@ -614,10 +952,48 @@ export const Geofencing = () => {
             onPress={() => void fitMapToCurrentLocation()}>
             <Text style={styles.mapChipText}>My location</Text>
           </Pressable>
+          {currentStation && (
+            <Pressable
+              style={[styles.mapChip, styles.mapChipStation]}
+              onPress={fitMapToStation}>
+              <Text style={styles.mapChipText}>Station view</Text>
+            </Pressable>
+          )}
         </View>
       </View>
 
       <View style={styles.bodyBottom}>
+        {currentStation && (
+          <View style={styles.amenityBox}>
+            <Text style={styles.amenityTitle}>
+              Amenities at {currentStation.name}
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.amenityScroll}>
+              {currentStation.amenities.map(amenity => {
+                const color = getAmenityColor(amenity.id);
+                return (
+                  <View
+                    key={amenity.id}
+                    style={[
+                      styles.amenityChip,
+                      {borderColor: color.stroke, backgroundColor: color.fill},
+                    ]}>
+                    <Text style={styles.amenityChipText}>{amenity.name}</Text>
+                    <Text style={styles.amenityChipSub}>
+                      {amenity.type === 'circle'
+                        ? `${amenity.radiusMeters}m`
+                        : 'polygon'}
+                    </Text>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          </View>
+        )}
+
         <View
           style={[
             styles.overlapBox,
@@ -628,15 +1004,14 @@ export const Geofencing = () => {
           <Text style={styles.overlapTitle}>Fence overlap check</Text>
           {overlapPairs.length === 0 ? (
             <Text style={styles.overlapOk}>
-              No overlapping pairs at current radii — clean signals for demos.
+              No overlapping station geofences.
             </Text>
           ) : (
             <>
               <Text style={styles.overlapWarn}>Overlapping pairs:</Text>
               {overlapPairs.map(p => (
                 <Text key={`${p.idA}-${p.idB}`} style={styles.overlapLine}>
-                  {p.idA} ↔ {p.idB}: {p.distanceM.toFixed(0)} m between centers
-                  · radii sum {p.sumRadiiM} m
+                  {p.idA} ↔ {p.idB}: {p.distanceM.toFixed(0)}m between centers
                 </Text>
               ))}
             </>
@@ -649,11 +1024,22 @@ export const Geofencing = () => {
             nestedScrollEnabled
             style={styles.refScroll}
             showsVerticalScrollIndicator>
-            {stationCoordinates.map(s => (
-              <Text key={s.id} style={styles.refLine}>
-                {s.id}: {s.latitude.toFixed(6)}, {s.longitude.toFixed(6)} ·{' '}
-                {GEOFENCE_RADIUS_METERS} m
-              </Text>
+            {stations.map(s => (
+              <View key={s.id}>
+                <Text style={styles.refLine}>
+                  📍 {s.id}: {s.latitude.toFixed(6)}, {s.longitude.toFixed(6)} ·{' '}
+                  {s.radiusMeters}m
+                </Text>
+                {s.amenities.map(a => (
+                  <Text key={a.id} style={styles.refLineAmenity}>
+                    {'    '}🏪 {a.name}: {a.latitude.toFixed(6)},{' '}
+                    {a.longitude.toFixed(6)}
+                    {a.type === 'circle'
+                      ? ` · ${a.radiusMeters}m`
+                      : ' · polygon'}
+                  </Text>
+                ))}
+              </View>
             ))}
           </ScrollView>
         </View>
@@ -676,27 +1062,27 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#e2e8f0',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '700',
-    marginBottom: 6,
+    marginBottom: 4,
   },
   subtitle: {
     color: '#94a3b8',
-    fontSize: 14,
-    marginBottom: 12,
-    lineHeight: 20,
+    fontSize: 13,
+    marginBottom: 10,
+    lineHeight: 18,
   },
   statusRow: {
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: 8,
-    marginBottom: 12,
+    marginBottom: 10,
   },
   statusPill: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 16,
   },
   statusOn: {
     backgroundColor: 'rgba(22, 163, 74, 0.35)',
@@ -708,14 +1094,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#f87171',
   },
+  statusStation: {
+    backgroundColor: 'rgba(59, 130, 246, 0.35)',
+    borderWidth: 1,
+    borderColor: '#3b82f6',
+  },
   statusPillText: {
     color: '#f8fafc',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
   },
   lastEvent: {
     color: '#a5b4fc',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
   },
   enableCard: {
@@ -723,21 +1114,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#1e293b',
-    paddingVertical: 12,
-    paddingHorizontal: 14,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     borderRadius: 10,
-    marginBottom: 12,
+    marginBottom: 10,
     borderWidth: 1,
     borderColor: '#334155',
   },
   enableLabel: {
     color: '#e2e8f0',
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
   },
   metaBox: {
-    marginBottom: 12,
-    padding: 12,
+    marginBottom: 10,
+    padding: 10,
     borderRadius: 10,
     backgroundColor: '#1e293b',
     borderLeftWidth: 4,
@@ -745,64 +1136,76 @@ const styles = StyleSheet.create({
   },
   metaTitle: {
     color: '#7dd3fc',
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '700',
-    marginBottom: 6,
+    marginBottom: 4,
     letterSpacing: 0.6,
   },
   metaText: {
     color: '#e2e8f0',
-    fontSize: 14,
+    fontSize: 13,
   },
   metaFenceDist: {
     color: '#a5b4fc',
-    fontSize: 11,
-    marginTop: 8,
+    fontSize: 10,
+    marginTop: 6,
     fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
-    lineHeight: 16,
+    lineHeight: 14,
+  },
+  metaAmenityDist: {
+    color: '#fbbf24',
+    fontSize: 10,
+    marginTop: 4,
+    fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+    lineHeight: 14,
   },
   sectionTitle: {
     color: '#e2e8f0',
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '600',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   historyPanel: {
-    marginBottom: 12,
+    marginBottom: 10,
     flexShrink: 0,
   },
   logBox: {
     flex: 1,
     backgroundColor: '#111827',
     borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingTop: 10,
+    paddingHorizontal: 8,
+    paddingTop: 8,
     borderWidth: 1,
     borderColor: '#1f2937',
     borderLeftWidth: 4,
     borderLeftColor: '#22c55e',
   },
   logBoxContent: {
-    paddingBottom: 10,
+    paddingBottom: 8,
     flexGrow: 1,
   },
   logEmpty: {
     color: '#64748b',
-    fontSize: 13,
+    fontSize: 12,
     fontStyle: 'italic',
-    paddingVertical: 12,
-    lineHeight: 20,
+    paddingVertical: 10,
+    lineHeight: 18,
   },
   logRow: {
-    marginBottom: 10,
-    paddingBottom: 10,
+    marginBottom: 8,
+    paddingBottom: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#334155',
   },
+  logHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 2,
+  },
   logAction: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '800',
-    marginBottom: 4,
   },
   logEntry: {
     color: '#4ade80',
@@ -810,11 +1213,32 @@ const styles = StyleSheet.create({
   logExit: {
     color: '#fb923c',
   },
+  logType: {
+    fontSize: 10,
+    fontWeight: '600',
+  },
+  logTypeStation: {
+    color: '#60a5fa',
+  },
+  logTypeAmenity: {
+    color: '#fbbf24',
+  },
+  logName: {
+    color: '#f1f5f9',
+    fontSize: 12,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
   logDetail: {
-    color: '#cbd5e1',
-    fontSize: 11,
+    color: '#94a3b8',
+    fontSize: 10,
     fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
-    lineHeight: 16,
+    lineHeight: 14,
+  },
+  logTime: {
+    color: '#64748b',
+    fontSize: 9,
+    marginTop: 2,
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -823,7 +1247,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 0,
     borderRadius: 12,
-    marginBottom: 10,
+    marginBottom: 8,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#334155',
@@ -836,28 +1260,66 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-end',
-    gap: 8,
+    gap: 6,
   },
   mapChip: {
     backgroundColor: 'rgba(15, 23, 42, 0.92)',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: '#475569',
   },
   mapChipText: {
     color: '#f1f5f9',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
   },
   mapChipActive: {
     borderColor: '#22c55e',
     backgroundColor: 'rgba(20, 83, 45, 0.95)',
   },
+  mapChipStation: {
+    borderColor: '#3b82f6',
+    backgroundColor: 'rgba(30, 58, 138, 0.95)',
+  },
+  amenityBox: {
+    marginBottom: 8,
+    padding: 8,
+    borderRadius: 10,
+    backgroundColor: '#1e293b',
+    borderWidth: 1,
+    borderColor: '#fbbf24',
+  },
+  amenityTitle: {
+    color: '#fbbf24',
+    fontSize: 11,
+    fontWeight: '700',
+    marginBottom: 6,
+  },
+  amenityScroll: {
+    flexDirection: 'row',
+  },
+  amenityChip: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginRight: 8,
+  },
+  amenityChipText: {
+    color: '#f8fafc',
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  amenityChipSub: {
+    color: '#cbd5e1',
+    fontSize: 9,
+    marginTop: 2,
+  },
   overlapBox: {
-    marginBottom: 10,
-    padding: 10,
+    marginBottom: 8,
+    padding: 8,
     borderRadius: 10,
     borderWidth: 1,
   },
@@ -871,30 +1333,30 @@ const styles = StyleSheet.create({
   },
   overlapTitle: {
     color: '#f8fafc',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
-    marginBottom: 6,
+    marginBottom: 4,
   },
   overlapOk: {
     color: '#bbf7d0',
-    fontSize: 12,
-    lineHeight: 18,
+    fontSize: 11,
+    lineHeight: 16,
   },
   overlapWarn: {
     color: '#fecaca',
-    fontSize: 12,
-    marginBottom: 6,
+    fontSize: 11,
+    marginBottom: 4,
     fontWeight: '600',
   },
   overlapLine: {
     color: '#fecaca',
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
-    marginBottom: 4,
-    lineHeight: 16,
+    marginBottom: 2,
+    lineHeight: 14,
   },
   refBox: {
-    padding: 10,
+    padding: 8,
     borderRadius: 10,
     backgroundColor: '#0c4a6e',
     borderWidth: 1,
@@ -902,16 +1364,23 @@ const styles = StyleSheet.create({
   },
   refTitle: {
     color: '#e0f2fe',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   refLine: {
     color: '#f0f9ff',
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
-    marginBottom: 4,
-    lineHeight: 16,
+    marginBottom: 3,
+    lineHeight: 14,
+  },
+  refLineAmenity: {
+    color: '#bae6fd',
+    fontSize: 9,
+    fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+    marginBottom: 2,
+    lineHeight: 13,
   },
   refScroll: {
     maxHeight: 100,

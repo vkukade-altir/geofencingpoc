@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="GeofencingNew" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>Station + Amenity — Stationary Stop Test</name>
+    <desc>
+      Synced with stationData.ts. Three stops inside EV_Station_Test,
+      each COMPLETELY STATIONARY for 1.5 min (identical lat/lon, advancing time only).
+      stopTimeout=1 min, heartbeat=30s inside station.
+    </desc>
+  </metadata>
+  <trk>
+    <name>Station Amenity Stationary Test</name>
+    <trkseg>
+      <!-- PHASE 1: DRIVE TOWARD STATION -->
+      <trkpt lat="17.4177" lon="78.338"><ele>520</ele><time>2024-01-01T10:00:00Z</time></trkpt>
+      <trkpt lat="17.4183" lon="78.338"><ele>520</ele><time>2024-01-01T10:00:06Z</time></trkpt>
+      <trkpt lat="17.4189" lon="78.338"><ele>520</ele><time>2024-01-01T10:00:12Z</time></trkpt>
+
+      <!-- PHASE 2: ENTER STATION GEOFENCE -->
+      <trkpt lat="17.41905" lon="78.338"><ele>520</ele><time>2024-01-01T10:00:14Z</time></trkpt>
+      <!-- *** STATION ENTER EXPECTED *** -->
+      <trkpt lat="17.4194" lon="78.338"><ele>520</ele><time>2024-01-01T10:00:18Z</time></trkpt>
+      <trkpt lat="17.4198" lon="78.3379"><ele>520</ele><time>2024-01-01T10:00:22Z</time></trkpt>
+
+      <!-- PHASE 3: TO CHARGING BAY -->
+      <trkpt lat="17.4200" lon="78.3378"><ele>520</ele><time>2024-01-01T10:00:26Z</time></trkpt>
+      <trkpt lat="17.4201" lon="78.3377"><ele>520</ele><time>2024-01-01T10:00:30Z</time></trkpt>
+
+      <!-- STOP 1: CHARGING BAY — STATIONARY 1.5 MIN -->
+      <trkpt lat="17.4201" lon="78.3377"><ele>520</ele><time>2024-01-01T10:00:30Z</time></trkpt>
+      <trkpt lat="17.4201" lon="78.3377"><ele>520</ele><time>2024-01-01T10:01:00Z</time></trkpt>
+      <trkpt lat="17.4201" lon="78.3377"><ele>520</ele><time>2024-01-01T10:01:30Z</time></trkpt>
+      <trkpt lat="17.4201" lon="78.3377"><ele>520</ele><time>2024-01-01T10:02:00Z</time></trkpt>
+
+      <!-- PHASE 4: WALK TO CAFE -->
+      <trkpt lat="17.42012" lon="78.33785"><ele>520</ele><time>2024-01-01T10:02:05Z</time></trkpt>
+      <trkpt lat="17.42018" lon="78.33805"><ele>520</ele><time>2024-01-01T10:02:10Z</time></trkpt>
+      <trkpt lat="17.42022" lon="78.33818"><ele>520</ele><time>2024-01-01T10:02:15Z</time></trkpt>
+      <trkpt lat="17.42027" lon="78.33825"><ele>520</ele><time>2024-01-01T10:02:20Z</time></trkpt>
+
+      <!-- STOP 2: CAFE — STATIONARY 1.5 MIN -->
+      <trkpt lat="17.42027" lon="78.33825"><ele>520</ele><time>2024-01-01T10:02:20Z</time></trkpt>
+      <trkpt lat="17.42027" lon="78.33825"><ele>520</ele><time>2024-01-01T10:02:50Z</time></trkpt>
+      <trkpt lat="17.42027" lon="78.33825"><ele>520</ele><time>2024-01-01T10:03:20Z</time></trkpt>
+      <trkpt lat="17.42027" lon="78.33825"><ele>520</ele><time>2024-01-01T10:03:50Z</time></trkpt>
+
+      <!-- PHASE 5: WALK TO RESTROOM -->
+      <trkpt lat="17.42015" lon="78.3382"><ele>520</ele><time>2024-01-01T10:03:55Z</time></trkpt>
+      <trkpt lat="17.4200" lon="78.33815"><ele>520</ele><time>2024-01-01T10:04:00Z</time></trkpt>
+      <trkpt lat="17.41985" lon="78.33812"><ele>520</ele><time>2024-01-01T10:04:05Z</time></trkpt>
+      <trkpt lat="17.41975" lon="78.3381"><ele>520</ele><time>2024-01-01T10:04:10Z</time></trkpt>
+      <trkpt lat="17.41965" lon="78.3381"><ele>520</ele><time>2024-01-01T10:04:15Z</time></trkpt>
+
+      <!-- STOP 3: RESTROOM — STATIONARY 1.5 MIN -->
+      <trkpt lat="17.41965" lon="78.3381"><ele>520</ele><time>2024-01-01T10:04:15Z</time></trkpt>
+      <trkpt lat="17.41965" lon="78.3381"><ele>520</ele><time>2024-01-01T10:04:45Z</time></trkpt>
+      <trkpt lat="17.41965" lon="78.3381"><ele>520</ele><time>2024-01-01T10:05:15Z</time></trkpt>
+      <trkpt lat="17.41965" lon="78.3381"><ele>520</ele><time>2024-01-01T10:05:45Z</time></trkpt>
+
+      <!-- PHASE 6: EXIT STATION -->
+      <trkpt lat="17.41975" lon="78.3381"><ele>520</ele><time>2024-01-01T10:05:50Z</time></trkpt>
+      <trkpt lat="17.4199" lon="78.338"><ele>520</ele><time>2024-01-01T10:05:55Z</time></trkpt>
+      <trkpt lat="17.4201" lon="78.338"><ele>520</ele><time>2024-01-01T10:06:00Z</time></trkpt>
+      <trkpt lat="17.4205" lon="78.338"><ele>520</ele><time>2024-01-01T10:06:05Z</time></trkpt>
+      <trkpt lat="17.4209" lon="78.338"><ele>520</ele><time>2024-01-01T10:06:10Z</time></trkpt>
+      <!-- *** STATION EXIT EXPECTED *** -->
+      <trkpt lat="17.4211" lon="78.338"><ele>520</ele><time>2024-01-01T10:06:15Z</time></trkpt>
+      <trkpt lat="17.4218" lon="78.338"><ele>520</ele><time>2024-01-01T10:06:25Z</time></trkpt>
+      <trkpt lat="17.4225" lon="78.338"><ele>520</ele><time>2024-01-01T10:06:35Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

@@ -2,6 +2,7 @@ import UIKit
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
+import TSBackgroundFetch
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,7 +30,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       launchOptions: launchOptions
     )
 
+    TSBackgroundFetch.sharedInstance().didFinishLaunching()
+
     return true
+  }
+
+  func application(
+    _ application: UIApplication,
+    performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+  ) {
+    TSBackgroundFetch.sharedInstance().performFetch(
+      withCompletionHandler: completionHandler,
+      applicationState: application.applicationState
+    )
   }
 }
 

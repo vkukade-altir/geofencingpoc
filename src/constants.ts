@@ -71,5 +71,10 @@ export const Stations200m = [
 // export const AndroidStationCoordinates = Stations20m;
 
 // For 200m testing (production-like, well-spaced)
+// export const IOSStationCoordinates = Stations200m;
+// export const AndroidStationCoordinates = Stations200m;
+
+// For Station + Amenity testing (use with station_amenity_test.gpx)
+// Import from stationData.ts for the full station with amenities
 export const IOSStationCoordinates = Stations20m;
 export const AndroidStationCoordinates = Stations20m;
