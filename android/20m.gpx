@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="GeofencingNew" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>Capgemini to Sheraton to Franklin - Hyderabad (Detailed)</name>
+    <desc>High-resolution route for 20m geofence testing. Points every ~3-5 meters.</desc>
+  </metadata>
+  <trk>
+    <name>Geofence Test Route - 20m Radius</name>
+    <trkseg>
+      <!-- ============================================ -->
+      <!-- APPROACH TO CAPGEMINI (center: 17.419234, 78.339111) -->
+      <!-- Starting ~80m south of Capgemini center -->
+      <!-- ============================================ -->
+      <trkpt lat="17.41850" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:00Z</time></trkpt>
+      <trkpt lat="17.41854" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:02Z</time></trkpt>
+      <trkpt lat="17.41858" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:04Z</time></trkpt>
+      <trkpt lat="17.41862" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:06Z</time></trkpt>
+      <trkpt lat="17.41866" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:08Z</time></trkpt>
+      <trkpt lat="17.41870" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:10Z</time></trkpt>
+      <trkpt lat="17.41874" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:12Z</time></trkpt>
+      <trkpt lat="17.41878" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:14Z</time></trkpt>
+      <trkpt lat="17.41882" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:16Z</time></trkpt>
+      <trkpt lat="17.41886" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:18Z</time></trkpt>
+      <trkpt lat="17.41890" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:20Z</time></trkpt>
+      <trkpt lat="17.41894" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:22Z</time></trkpt>
+      <trkpt lat="17.41898" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:24Z</time></trkpt>
+      <trkpt lat="17.41902" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:26Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- ENTERING CAPGEMINI 20m zone (~20m from center) -->
+      <!-- Center: 17.419234, 78.339111 -->
+      <!-- ============================================ -->
+      <trkpt lat="17.41906" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:28Z</time></trkpt>
+      <trkpt lat="17.41908" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:30Z</time></trkpt>
+      <trkpt lat="17.41910" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:32Z</time></trkpt>
+      <trkpt lat="17.41912" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:34Z</time></trkpt>
+      <trkpt lat="17.41914" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:36Z</time></trkpt>
+      <trkpt lat="17.41916" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:38Z</time></trkpt>
+      <trkpt lat="17.41918" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:40Z</time></trkpt>
+      <trkpt lat="17.41920" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:42Z</time></trkpt>
+      <trkpt lat="17.41922" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:44Z</time></trkpt>
+      <!-- AT CAPGEMINI CENTER -->
+      <trkpt lat="17.41923" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:46Z</time></trkpt>
+      <trkpt lat="17.41924" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:48Z</time></trkpt>
+      <trkpt lat="17.41926" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:50Z</time></trkpt>
+      <trkpt lat="17.41928" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:52Z</time></trkpt>
+      <trkpt lat="17.41930" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:54Z</time></trkpt>
+      <trkpt lat="17.41932" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:56Z</time></trkpt>
+      <trkpt lat="17.41934" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:58Z</time></trkpt>
+      <trkpt lat="17.41936" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:00Z</time></trkpt>
+      <trkpt lat="17.41938" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:02Z</time></trkpt>
+      <trkpt lat="17.41940" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:04Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- EXITING CAPGEMINI, heading NW towards Sheraton -->
+      <!-- ============================================ -->
+      <trkpt lat="17.41942" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:06Z</time></trkpt>
+      <trkpt lat="17.41946" lon="78.33909"><ele>520</ele><time>2024-01-01T10:01:08Z</time></trkpt>
+      <trkpt lat="17.41950" lon="78.33907"><ele>520</ele><time>2024-01-01T10:01:10Z</time></trkpt>
+      <trkpt lat="17.41954" lon="78.33905"><ele>520</ele><time>2024-01-01T10:01:12Z</time></trkpt>
+      <trkpt lat="17.41958" lon="78.33903"><ele>520</ele><time>2024-01-01T10:01:14Z</time></trkpt>
+      <trkpt lat="17.41962" lon="78.33901"><ele>520</ele><time>2024-01-01T10:01:16Z</time></trkpt>
+      <trkpt lat="17.41966" lon="78.33899"><ele>520</ele><time>2024-01-01T10:01:18Z</time></trkpt>
+      <trkpt lat="17.41970" lon="78.33897"><ele>520</ele><time>2024-01-01T10:01:20Z</time></trkpt>
+      <trkpt lat="17.41974" lon="78.33895"><ele>520</ele><time>2024-01-01T10:01:22Z</time></trkpt>
+      <trkpt lat="17.41978" lon="78.33893"><ele>520</ele><time>2024-01-01T10:01:24Z</time></trkpt>
+      <trkpt lat="17.41982" lon="78.33891"><ele>520</ele><time>2024-01-01T10:01:26Z</time></trkpt>
+      <trkpt lat="17.41986" lon="78.33889"><ele>520</ele><time>2024-01-01T10:01:28Z</time></trkpt>
+      <trkpt lat="17.41990" lon="78.33887"><ele>520</ele><time>2024-01-01T10:01:30Z</time></trkpt>
+      <trkpt lat="17.41994" lon="78.33885"><ele>520</ele><time>2024-01-01T10:01:32Z</time></trkpt>
+      <trkpt lat="17.41998" lon="78.33883"><ele>520</ele><time>2024-01-01T10:01:34Z</time></trkpt>
+      <trkpt lat="17.42002" lon="78.33881"><ele>520</ele><time>2024-01-01T10:01:36Z</time></trkpt>
+      <trkpt lat="17.42006" lon="78.33879"><ele>520</ele><time>2024-01-01T10:01:38Z</time></trkpt>
+      <trkpt lat="17.42010" lon="78.33877"><ele>520</ele><time>2024-01-01T10:01:40Z</time></trkpt>
+      <trkpt lat="17.42014" lon="78.33875"><ele>520</ele><time>2024-01-01T10:01:42Z</time></trkpt>
+      <trkpt lat="17.42018" lon="78.33873"><ele>520</ele><time>2024-01-01T10:01:44Z</time></trkpt>
+      <trkpt lat="17.42022" lon="78.33871"><ele>520</ele><time>2024-01-01T10:01:46Z</time></trkpt>
+      <trkpt lat="17.42026" lon="78.33869"><ele>520</ele><time>2024-01-01T10:01:48Z</time></trkpt>
+      <trkpt lat="17.42030" lon="78.33867"><ele>520</ele><time>2024-01-01T10:01:50Z</time></trkpt>
+      <trkpt lat="17.42034" lon="78.33865"><ele>520</ele><time>2024-01-01T10:01:52Z</time></trkpt>
+      <trkpt lat="17.42038" lon="78.33863"><ele>520</ele><time>2024-01-01T10:01:54Z</time></trkpt>
+      <trkpt lat="17.42042" lon="78.33861"><ele>520</ele><time>2024-01-01T10:01:56Z</time></trkpt>
+      <trkpt lat="17.42046" lon="78.33859"><ele>520</ele><time>2024-01-01T10:01:58Z</time></trkpt>
+      <trkpt lat="17.42050" lon="78.33857"><ele>520</ele><time>2024-01-01T10:02:00Z</time></trkpt>
+      <trkpt lat="17.42054" lon="78.33855"><ele>520</ele><time>2024-01-01T10:02:02Z</time></trkpt>
+      <trkpt lat="17.42058" lon="78.33853"><ele>520</ele><time>2024-01-01T10:02:04Z</time></trkpt>
+      <trkpt lat="17.42062" lon="78.33851"><ele>520</ele><time>2024-01-01T10:02:06Z</time></trkpt>
+      <trkpt lat="17.42066" lon="78.33849"><ele>520</ele><time>2024-01-01T10:02:08Z</time></trkpt>
+      <trkpt lat="17.42070" lon="78.33847"><ele>520</ele><time>2024-01-01T10:02:10Z</time></trkpt>
+      <trkpt lat="17.42074" lon="78.33845"><ele>520</ele><time>2024-01-01T10:02:12Z</time></trkpt>
+      <trkpt lat="17.42078" lon="78.33843"><ele>520</ele><time>2024-01-01T10:02:14Z</time></trkpt>
+      <trkpt lat="17.42082" lon="78.33841"><ele>520</ele><time>2024-01-01T10:02:16Z</time></trkpt>
+      <trkpt lat="17.42086" lon="78.33839"><ele>520</ele><time>2024-01-01T10:02:18Z</time></trkpt>
+      <trkpt lat="17.42090" lon="78.33837"><ele>520</ele><time>2024-01-01T10:02:20Z</time></trkpt>
+      <trkpt lat="17.42094" lon="78.33835"><ele>520</ele><time>2024-01-01T10:02:22Z</time></trkpt>
+      <trkpt lat="17.42098" lon="78.33833"><ele>520</ele><time>2024-01-01T10:02:24Z</time></trkpt>
+      <trkpt lat="17.42102" lon="78.33831"><ele>520</ele><time>2024-01-01T10:02:26Z</time></trkpt>
+      <trkpt lat="17.42106" lon="78.33829"><ele>520</ele><time>2024-01-01T10:02:28Z</time></trkpt>
+      <trkpt lat="17.42110" lon="78.33827"><ele>520</ele><time>2024-01-01T10:02:30Z</time></trkpt>
+      <trkpt lat="17.42114" lon="78.33825"><ele>520</ele><time>2024-01-01T10:02:32Z</time></trkpt>
+      <trkpt lat="17.42118" lon="78.33823"><ele>520</ele><time>2024-01-01T10:02:34Z</time></trkpt>
+      <trkpt lat="17.42122" lon="78.33821"><ele>520</ele><time>2024-01-01T10:02:36Z</time></trkpt>
+      <trkpt lat="17.42126" lon="78.33819"><ele>520</ele><time>2024-01-01T10:02:38Z</time></trkpt>
+      <trkpt lat="17.42130" lon="78.33817"><ele>520</ele><time>2024-01-01T10:02:40Z</time></trkpt>
+      <trkpt lat="17.42134" lon="78.33815"><ele>520</ele><time>2024-01-01T10:02:42Z</time></trkpt>
+      <trkpt lat="17.42138" lon="78.33813"><ele>520</ele><time>2024-01-01T10:02:44Z</time></trkpt>
+      <trkpt lat="17.42142" lon="78.33811"><ele>520</ele><time>2024-01-01T10:02:46Z</time></trkpt>
+      <trkpt lat="17.42146" lon="78.33809"><ele>520</ele><time>2024-01-01T10:02:48Z</time></trkpt>
+      <trkpt lat="17.42150" lon="78.33807"><ele>520</ele><time>2024-01-01T10:02:50Z</time></trkpt>
+      <trkpt lat="17.42154" lon="78.33805"><ele>520</ele><time>2024-01-01T10:02:52Z</time></trkpt>
+      <trkpt lat="17.42158" lon="78.33803"><ele>520</ele><time>2024-01-01T10:02:54Z</time></trkpt>
+      <trkpt lat="17.42162" lon="78.33801"><ele>520</ele><time>2024-01-01T10:02:56Z</time></trkpt>
+      <trkpt lat="17.42166" lon="78.33799"><ele>520</ele><time>2024-01-01T10:02:58Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- APPROACHING SHERATON (center: 17.421879, 78.337274) -->
+      <!-- ============================================ -->
+      <trkpt lat="17.42168" lon="78.33795"><ele>520</ele><time>2024-01-01T10:03:00Z</time></trkpt>
+      <trkpt lat="17.42170" lon="78.33790"><ele>520</ele><time>2024-01-01T10:03:02Z</time></trkpt>
+      <trkpt lat="17.42172" lon="78.33785"><ele>520</ele><time>2024-01-01T10:03:04Z</time></trkpt>
+      <trkpt lat="17.42174" lon="78.33780"><ele>520</ele><time>2024-01-01T10:03:06Z</time></trkpt>
+      <trkpt lat="17.42176" lon="78.33775"><ele>520</ele><time>2024-01-01T10:03:08Z</time></trkpt>
+      <trkpt lat="17.42178" lon="78.33770"><ele>520</ele><time>2024-01-01T10:03:10Z</time></trkpt>
+      <trkpt lat="17.42180" lon="78.33765"><ele>520</ele><time>2024-01-01T10:03:12Z</time></trkpt>
+      <trkpt lat="17.42182" lon="78.33760"><ele>520</ele><time>2024-01-01T10:03:14Z</time></trkpt>
+      <trkpt lat="17.42184" lon="78.33755"><ele>520</ele><time>2024-01-01T10:03:16Z</time></trkpt>
+      <trkpt lat="17.42186" lon="78.33750"><ele>520</ele><time>2024-01-01T10:03:18Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- ENTERING SHERATON 20m zone -->
+      <!-- Center: 17.421879, 78.337274 -->
+      <!-- ============================================ -->
+      <trkpt lat="17.42187" lon="78.33745"><ele>520</ele><time>2024-01-01T10:03:20Z</time></trkpt>
+      <trkpt lat="17.42187" lon="78.33742"><ele>520</ele><time>2024-01-01T10:03:22Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33739"><ele>520</ele><time>2024-01-01T10:03:24Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33736"><ele>520</ele><time>2024-01-01T10:03:26Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33733"><ele>520</ele><time>2024-01-01T10:03:28Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33730"><ele>520</ele><time>2024-01-01T10:03:30Z</time></trkpt>
+      <!-- AT SHERATON CENTER -->
+      <trkpt lat="17.42188" lon="78.33727"><ele>520</ele><time>2024-01-01T10:03:32Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33724"><ele>520</ele><time>2024-01-01T10:03:34Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33721"><ele>520</ele><time>2024-01-01T10:03:36Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33718"><ele>520</ele><time>2024-01-01T10:03:38Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33715"><ele>520</ele><time>2024-01-01T10:03:40Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33712"><ele>520</ele><time>2024-01-01T10:03:42Z</time></trkpt>
+      <trkpt lat="17.42188" lon="78.33709"><ele>520</ele><time>2024-01-01T10:03:44Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- EXITING SHERATON, heading west towards Franklin -->
+      <!-- ============================================ -->
+      <trkpt lat="17.42190" lon="78.33706"><ele>520</ele><time>2024-01-01T10:03:46Z</time></trkpt>
+      <trkpt lat="17.42192" lon="78.33703"><ele>520</ele><time>2024-01-01T10:03:48Z</time></trkpt>
+      <trkpt lat="17.42194" lon="78.33700"><ele>520</ele><time>2024-01-01T10:03:50Z</time></trkpt>
+      <trkpt lat="17.42196" lon="78.33697"><ele>520</ele><time>2024-01-01T10:03:52Z</time></trkpt>
+      <trkpt lat="17.42198" lon="78.33694"><ele>520</ele><time>2024-01-01T10:03:54Z</time></trkpt>
+      <trkpt lat="17.42200" lon="78.33691"><ele>520</ele><time>2024-01-01T10:03:56Z</time></trkpt>
+      <trkpt lat="17.42202" lon="78.33688"><ele>520</ele><time>2024-01-01T10:03:58Z</time></trkpt>
+      <trkpt lat="17.42204" lon="78.33685"><ele>520</ele><time>2024-01-01T10:04:00Z</time></trkpt>
+      <trkpt lat="17.42206" lon="78.33682"><ele>520</ele><time>2024-01-01T10:04:02Z</time></trkpt>
+      <trkpt lat="17.42208" lon="78.33679"><ele>520</ele><time>2024-01-01T10:04:04Z</time></trkpt>
+      <trkpt lat="17.42210" lon="78.33676"><ele>520</ele><time>2024-01-01T10:04:06Z</time></trkpt>
+      <trkpt lat="17.42212" lon="78.33673"><ele>520</ele><time>2024-01-01T10:04:08Z</time></trkpt>
+      <trkpt lat="17.42214" lon="78.33670"><ele>520</ele><time>2024-01-01T10:04:10Z</time></trkpt>
+      <trkpt lat="17.42216" lon="78.33667"><ele>520</ele><time>2024-01-01T10:04:12Z</time></trkpt>
+      <trkpt lat="17.42218" lon="78.33664"><ele>520</ele><time>2024-01-01T10:04:14Z</time></trkpt>
+      <trkpt lat="17.42220" lon="78.33661"><ele>520</ele><time>2024-01-01T10:04:16Z</time></trkpt>
+      <trkpt lat="17.42222" lon="78.33658"><ele>520</ele><time>2024-01-01T10:04:18Z</time></trkpt>
+      <trkpt lat="17.42224" lon="78.33655"><ele>520</ele><time>2024-01-01T10:04:20Z</time></trkpt>
+      <trkpt lat="17.42226" lon="78.33652"><ele>520</ele><time>2024-01-01T10:04:22Z</time></trkpt>
+      <trkpt lat="17.42228" lon="78.33649"><ele>520</ele><time>2024-01-01T10:04:24Z</time></trkpt>
+      <trkpt lat="17.42230" lon="78.33646"><ele>520</ele><time>2024-01-01T10:04:26Z</time></trkpt>
+      <trkpt lat="17.42232" lon="78.33643"><ele>520</ele><time>2024-01-01T10:04:28Z</time></trkpt>
+      <trkpt lat="17.42234" lon="78.33640"><ele>520</ele><time>2024-01-01T10:04:30Z</time></trkpt>
+      <trkpt lat="17.42236" lon="78.33637"><ele>520</ele><time>2024-01-01T10:04:32Z</time></trkpt>
+      <trkpt lat="17.42238" lon="78.33634"><ele>520</ele><time>2024-01-01T10:04:34Z</time></trkpt>
+      <trkpt lat="17.42240" lon="78.33631"><ele>520</ele><time>2024-01-01T10:04:36Z</time></trkpt>
+      <trkpt lat="17.42242" lon="78.33628"><ele>520</ele><time>2024-01-01T10:04:38Z</time></trkpt>
+      <trkpt lat="17.42244" lon="78.33625"><ele>520</ele><time>2024-01-01T10:04:40Z</time></trkpt>
+      <trkpt lat="17.42246" lon="78.33622"><ele>520</ele><time>2024-01-01T10:04:42Z</time></trkpt>
+      <trkpt lat="17.42248" lon="78.33619"><ele>520</ele><time>2024-01-01T10:04:44Z</time></trkpt>
+      <trkpt lat="17.42250" lon="78.33616"><ele>520</ele><time>2024-01-01T10:04:46Z</time></trkpt>
+      <trkpt lat="17.42252" lon="78.33613"><ele>520</ele><time>2024-01-01T10:04:48Z</time></trkpt>
+      <trkpt lat="17.42254" lon="78.33610"><ele>520</ele><time>2024-01-01T10:04:50Z</time></trkpt>
+      <trkpt lat="17.42256" lon="78.33607"><ele>520</ele><time>2024-01-01T10:04:52Z</time></trkpt>
+      <trkpt lat="17.42258" lon="78.33604"><ele>520</ele><time>2024-01-01T10:04:54Z</time></trkpt>
+      <trkpt lat="17.42260" lon="78.33601"><ele>520</ele><time>2024-01-01T10:04:56Z</time></trkpt>
+      <trkpt lat="17.42262" lon="78.33598"><ele>520</ele><time>2024-01-01T10:04:58Z</time></trkpt>
+      <trkpt lat="17.42264" lon="78.33595"><ele>520</ele><time>2024-01-01T10:05:00Z</time></trkpt>
+      <trkpt lat="17.42266" lon="78.33592"><ele>520</ele><time>2024-01-01T10:05:02Z</time></trkpt>
+      <trkpt lat="17.42268" lon="78.33589"><ele>520</ele><time>2024-01-01T10:05:04Z</time></trkpt>
+      <trkpt lat="17.42270" lon="78.33586"><ele>520</ele><time>2024-01-01T10:05:06Z</time></trkpt>
+      <trkpt lat="17.42272" lon="78.33583"><ele>520</ele><time>2024-01-01T10:05:08Z</time></trkpt>
+      <trkpt lat="17.42274" lon="78.33580"><ele>520</ele><time>2024-01-01T10:05:10Z</time></trkpt>
+      <trkpt lat="17.42276" lon="78.33577"><ele>520</ele><time>2024-01-01T10:05:12Z</time></trkpt>
+      <trkpt lat="17.42278" lon="78.33574"><ele>520</ele><time>2024-01-01T10:05:14Z</time></trkpt>
+      <trkpt lat="17.42280" lon="78.33571"><ele>520</ele><time>2024-01-01T10:05:16Z</time></trkpt>
+      <trkpt lat="17.42282" lon="78.33568"><ele>520</ele><time>2024-01-01T10:05:18Z</time></trkpt>
+      <trkpt lat="17.42284" lon="78.33565"><ele>520</ele><time>2024-01-01T10:05:20Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- ENTERING FRANKLIN 20m zone -->
+      <!-- Center: 17.422875, 78.335881 -->
+      <!-- ============================================ -->
+      <trkpt lat="17.42285" lon="78.33595"><ele>520</ele><time>2024-01-01T10:05:22Z</time></trkpt>
+      <trkpt lat="17.42286" lon="78.33593"><ele>520</ele><time>2024-01-01T10:05:24Z</time></trkpt>
+      <trkpt lat="17.42287" lon="78.33591"><ele>520</ele><time>2024-01-01T10:05:26Z</time></trkpt>
+      <!-- AT FRANKLIN CENTER -->
+      <trkpt lat="17.42288" lon="78.33588"><ele>520</ele><time>2024-01-01T10:05:28Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33586"><ele>520</ele><time>2024-01-01T10:05:30Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33584"><ele>520</ele><time>2024-01-01T10:05:32Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33582"><ele>520</ele><time>2024-01-01T10:05:34Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33580"><ele>520</ele><time>2024-01-01T10:05:36Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33578"><ele>520</ele><time>2024-01-01T10:05:38Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33576"><ele>520</ele><time>2024-01-01T10:05:40Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33574"><ele>520</ele><time>2024-01-01T10:05:42Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33572"><ele>520</ele><time>2024-01-01T10:05:44Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33570"><ele>520</ele><time>2024-01-01T10:05:46Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- EXITING FRANKLIN, continue west -->
+      <!-- ============================================ -->
+      <trkpt lat="17.42288" lon="78.33568"><ele>520</ele><time>2024-01-01T10:05:48Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33565"><ele>520</ele><time>2024-01-01T10:05:50Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33562"><ele>520</ele><time>2024-01-01T10:05:52Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33559"><ele>520</ele><time>2024-01-01T10:05:54Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33556"><ele>520</ele><time>2024-01-01T10:05:56Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33553"><ele>520</ele><time>2024-01-01T10:05:58Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33550"><ele>520</ele><time>2024-01-01T10:06:00Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33547"><ele>520</ele><time>2024-01-01T10:06:02Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33544"><ele>520</ele><time>2024-01-01T10:06:04Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33541"><ele>520</ele><time>2024-01-01T10:06:06Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33538"><ele>520</ele><time>2024-01-01T10:06:08Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33535"><ele>520</ele><time>2024-01-01T10:06:10Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33532"><ele>520</ele><time>2024-01-01T10:06:12Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33529"><ele>520</ele><time>2024-01-01T10:06:14Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33526"><ele>520</ele><time>2024-01-01T10:06:16Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33523"><ele>520</ele><time>2024-01-01T10:06:18Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33520"><ele>520</ele><time>2024-01-01T10:06:20Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33517"><ele>520</ele><time>2024-01-01T10:06:22Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33514"><ele>520</ele><time>2024-01-01T10:06:24Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33511"><ele>520</ele><time>2024-01-01T10:06:26Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33508"><ele>520</ele><time>2024-01-01T10:06:28Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33505"><ele>520</ele><time>2024-01-01T10:06:30Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33502"><ele>520</ele><time>2024-01-01T10:06:32Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33499"><ele>520</ele><time>2024-01-01T10:06:34Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33496"><ele>520</ele><time>2024-01-01T10:06:36Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33493"><ele>520</ele><time>2024-01-01T10:06:38Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33490"><ele>520</ele><time>2024-01-01T10:06:40Z</time></trkpt>
+      <!-- END: Well outside all geofences -->
+    </trkseg>
+  </trk>
+</gpx>

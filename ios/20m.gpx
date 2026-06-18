@@ -1,0 +1,259 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="GeofencingNew">
+<!-- High-resolution route for 20m geofence testing -->
+<!-- DENSE points (~1-2m steps) at ENTRY/EXIT boundaries -->
+<!-- Geofences: Capgemini (17.419234, 78.339111), Sheraton (17.421879, 78.337274), Franklin (17.422875, 78.335881) -->
+<!-- 20m radius boundary: ~0.00018° latitude -->
+
+<!-- ============================================ -->
+<!-- APPROACH TO CAPGEMINI - sparse (every 5m) -->
+<!-- ============================================ -->
+<wpt lat="17.41850" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:00Z</time></wpt>
+<wpt lat="17.41855" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:03Z</time></wpt>
+<wpt lat="17.41860" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:06Z</time></wpt>
+<wpt lat="17.41865" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:09Z</time></wpt>
+<wpt lat="17.41870" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:12Z</time></wpt>
+<wpt lat="17.41875" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:15Z</time></wpt>
+<wpt lat="17.41880" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:18Z</time></wpt>
+<wpt lat="17.41885" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:21Z</time></wpt>
+<wpt lat="17.41890" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:24Z</time></wpt>
+<wpt lat="17.41895" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:27Z</time></wpt>
+<wpt lat="17.41900" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:30Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- CAPGEMINI ENTRY BOUNDARY - DENSE (~1m steps, 1 sec each) -->
+<!-- Center: 17.419234, Entry boundary: ~17.41905 -->
+<!-- ============================================ -->
+<wpt lat="17.419020" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:32Z</time></wpt>
+<wpt lat="17.419030" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:33Z</time></wpt>
+<wpt lat="17.419040" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:34Z</time></wpt>
+<!-- ~22m from center -->
+<wpt lat="17.419050" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:35Z</time></wpt>
+<wpt lat="17.419055" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:36Z</time></wpt>
+<!-- ~20m ENTRY BOUNDARY -->
+<wpt lat="17.419060" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:37Z</time></wpt>
+<wpt lat="17.419065" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:38Z</time></wpt>
+<wpt lat="17.419070" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:39Z</time></wpt>
+<wpt lat="17.419075" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:40Z</time></wpt>
+<wpt lat="17.419080" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:41Z</time></wpt>
+<wpt lat="17.419085" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:42Z</time></wpt>
+<wpt lat="17.419090" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:43Z</time></wpt>
+<wpt lat="17.419095" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:44Z</time></wpt>
+<wpt lat="17.419100" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:45Z</time></wpt>
+<wpt lat="17.419105" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:46Z</time></wpt>
+<wpt lat="17.419110" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:47Z</time></wpt>
+<wpt lat="17.419115" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:48Z</time></wpt>
+<wpt lat="17.419120" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:49Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- INSIDE CAPGEMINI - normal pace -->
+<!-- ============================================ -->
+<wpt lat="17.41915" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:52Z</time></wpt>
+<wpt lat="17.41918" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:55Z</time></wpt>
+<wpt lat="17.41921" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:58Z</time></wpt>
+<!-- AT CAPGEMINI CENTER 17.419234 -->
+<wpt lat="17.41923" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:00Z</time></wpt>
+<wpt lat="17.41926" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:03Z</time></wpt>
+<wpt lat="17.41929" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:06Z</time></wpt>
+<wpt lat="17.41932" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:09Z</time></wpt>
+<wpt lat="17.41935" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:12Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- CAPGEMINI EXIT BOUNDARY - DENSE (~1m steps) -->
+<!-- Exit boundary: ~17.41941 -->
+<!-- ============================================ -->
+<wpt lat="17.419370" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:14Z</time></wpt>
+<wpt lat="17.419375" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:15Z</time></wpt>
+<wpt lat="17.419380" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:16Z</time></wpt>
+<wpt lat="17.419385" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:17Z</time></wpt>
+<wpt lat="17.419390" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:18Z</time></wpt>
+<wpt lat="17.419395" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:19Z</time></wpt>
+<wpt lat="17.419400" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:20Z</time></wpt>
+<wpt lat="17.419405" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:21Z</time></wpt>
+<!-- ~20m EXIT BOUNDARY -->
+<wpt lat="17.419410" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:22Z</time></wpt>
+<wpt lat="17.419415" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:23Z</time></wpt>
+<wpt lat="17.419420" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:24Z</time></wpt>
+<wpt lat="17.419425" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:25Z</time></wpt>
+<wpt lat="17.419430" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:26Z</time></wpt>
+<wpt lat="17.419435" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:27Z</time></wpt>
+<wpt lat="17.419440" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:28Z</time></wpt>
+<wpt lat="17.419450" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:29Z</time></wpt>
+<wpt lat="17.419460" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:30Z</time></wpt>
+<wpt lat="17.419470" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:31Z</time></wpt>
+<wpt lat="17.419480" lon="78.33911"><ele>520</ele><time>2024-01-01T10:01:32Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- TRAVEL TO SHERATON - sparse (every 5m) -->
+<!-- ============================================ -->
+<wpt lat="17.41955" lon="78.33905"><ele>520</ele><time>2024-01-01T10:01:36Z</time></wpt>
+<wpt lat="17.41965" lon="78.33898"><ele>520</ele><time>2024-01-01T10:01:40Z</time></wpt>
+<wpt lat="17.41975" lon="78.33891"><ele>520</ele><time>2024-01-01T10:01:44Z</time></wpt>
+<wpt lat="17.41985" lon="78.33884"><ele>520</ele><time>2024-01-01T10:01:48Z</time></wpt>
+<wpt lat="17.41995" lon="78.33877"><ele>520</ele><time>2024-01-01T10:01:52Z</time></wpt>
+<wpt lat="17.42005" lon="78.33870"><ele>520</ele><time>2024-01-01T10:01:56Z</time></wpt>
+<wpt lat="17.42015" lon="78.33863"><ele>520</ele><time>2024-01-01T10:02:00Z</time></wpt>
+<wpt lat="17.42025" lon="78.33856"><ele>520</ele><time>2024-01-01T10:02:04Z</time></wpt>
+<wpt lat="17.42035" lon="78.33849"><ele>520</ele><time>2024-01-01T10:02:08Z</time></wpt>
+<wpt lat="17.42045" lon="78.33842"><ele>520</ele><time>2024-01-01T10:02:12Z</time></wpt>
+<wpt lat="17.42055" lon="78.33835"><ele>520</ele><time>2024-01-01T10:02:16Z</time></wpt>
+<wpt lat="17.42065" lon="78.33828"><ele>520</ele><time>2024-01-01T10:02:20Z</time></wpt>
+<wpt lat="17.42075" lon="78.33821"><ele>520</ele><time>2024-01-01T10:02:24Z</time></wpt>
+<wpt lat="17.42085" lon="78.33814"><ele>520</ele><time>2024-01-01T10:02:28Z</time></wpt>
+<wpt lat="17.42095" lon="78.33807"><ele>520</ele><time>2024-01-01T10:02:32Z</time></wpt>
+<wpt lat="17.42105" lon="78.33800"><ele>520</ele><time>2024-01-01T10:02:36Z</time></wpt>
+<wpt lat="17.42115" lon="78.33793"><ele>520</ele><time>2024-01-01T10:02:40Z</time></wpt>
+<wpt lat="17.42125" lon="78.33786"><ele>520</ele><time>2024-01-01T10:02:44Z</time></wpt>
+<wpt lat="17.42135" lon="78.33779"><ele>520</ele><time>2024-01-01T10:02:48Z</time></wpt>
+<wpt lat="17.42145" lon="78.33772"><ele>520</ele><time>2024-01-01T10:02:52Z</time></wpt>
+<wpt lat="17.42155" lon="78.33765"><ele>520</ele><time>2024-01-01T10:02:56Z</time></wpt>
+<wpt lat="17.42165" lon="78.33758"><ele>520</ele><time>2024-01-01T10:03:00Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- SHERATON ENTRY BOUNDARY - DENSE (~1m steps) -->
+<!-- Center: 17.421879, 78.337274 -->
+<!-- Approaching from SE, entry ~20m out -->
+<!-- ============================================ -->
+<wpt lat="17.421680" lon="78.33748"><ele>520</ele><time>2024-01-01T10:03:02Z</time></wpt>
+<wpt lat="17.421690" lon="78.33747"><ele>520</ele><time>2024-01-01T10:03:03Z</time></wpt>
+<wpt lat="17.421700" lon="78.33746"><ele>520</ele><time>2024-01-01T10:03:04Z</time></wpt>
+<wpt lat="17.421710" lon="78.33745"><ele>520</ele><time>2024-01-01T10:03:05Z</time></wpt>
+<wpt lat="17.421720" lon="78.33744"><ele>520</ele><time>2024-01-01T10:03:06Z</time></wpt>
+<wpt lat="17.421730" lon="78.33743"><ele>520</ele><time>2024-01-01T10:03:07Z</time></wpt>
+<!-- ~20m ENTRY BOUNDARY -->
+<wpt lat="17.421740" lon="78.33742"><ele>520</ele><time>2024-01-01T10:03:08Z</time></wpt>
+<wpt lat="17.421750" lon="78.33741"><ele>520</ele><time>2024-01-01T10:03:09Z</time></wpt>
+<wpt lat="17.421760" lon="78.33740"><ele>520</ele><time>2024-01-01T10:03:10Z</time></wpt>
+<wpt lat="17.421770" lon="78.33739"><ele>520</ele><time>2024-01-01T10:03:11Z</time></wpt>
+<wpt lat="17.421780" lon="78.33738"><ele>520</ele><time>2024-01-01T10:03:12Z</time></wpt>
+<wpt lat="17.421790" lon="78.33737"><ele>520</ele><time>2024-01-01T10:03:13Z</time></wpt>
+<wpt lat="17.421800" lon="78.33736"><ele>520</ele><time>2024-01-01T10:03:14Z</time></wpt>
+<wpt lat="17.421810" lon="78.33735"><ele>520</ele><time>2024-01-01T10:03:15Z</time></wpt>
+<wpt lat="17.421820" lon="78.33734"><ele>520</ele><time>2024-01-01T10:03:16Z</time></wpt>
+<wpt lat="17.421830" lon="78.33733"><ele>520</ele><time>2024-01-01T10:03:17Z</time></wpt>
+<wpt lat="17.421840" lon="78.33732"><ele>520</ele><time>2024-01-01T10:03:18Z</time></wpt>
+<wpt lat="17.421850" lon="78.33731"><ele>520</ele><time>2024-01-01T10:03:19Z</time></wpt>
+<wpt lat="17.421860" lon="78.33730"><ele>520</ele><time>2024-01-01T10:03:20Z</time></wpt>
+<wpt lat="17.421870" lon="78.33729"><ele>520</ele><time>2024-01-01T10:03:21Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- INSIDE SHERATON - normal pace -->
+<!-- ============================================ -->
+<!-- AT SHERATON CENTER 17.421879, 78.337274 -->
+<wpt lat="17.421879" lon="78.33727"><ele>520</ele><time>2024-01-01T10:03:23Z</time></wpt>
+<wpt lat="17.421880" lon="78.33724"><ele>520</ele><time>2024-01-01T10:03:26Z</time></wpt>
+<wpt lat="17.421880" lon="78.33721"><ele>520</ele><time>2024-01-01T10:03:29Z</time></wpt>
+<wpt lat="17.421880" lon="78.33718"><ele>520</ele><time>2024-01-01T10:03:32Z</time></wpt>
+<wpt lat="17.421880" lon="78.33715"><ele>520</ele><time>2024-01-01T10:03:35Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- SHERATON EXIT BOUNDARY - DENSE (~1m steps) -->
+<!-- Exiting westward -->
+<!-- ============================================ -->
+<wpt lat="17.421885" lon="78.33712"><ele>520</ele><time>2024-01-01T10:03:37Z</time></wpt>
+<wpt lat="17.421885" lon="78.33711"><ele>520</ele><time>2024-01-01T10:03:38Z</time></wpt>
+<wpt lat="17.421885" lon="78.33710"><ele>520</ele><time>2024-01-01T10:03:39Z</time></wpt>
+<wpt lat="17.421885" lon="78.33709"><ele>520</ele><time>2024-01-01T10:03:40Z</time></wpt>
+<!-- ~20m EXIT BOUNDARY -->
+<wpt lat="17.421890" lon="78.33708"><ele>520</ele><time>2024-01-01T10:03:41Z</time></wpt>
+<wpt lat="17.421890" lon="78.33707"><ele>520</ele><time>2024-01-01T10:03:42Z</time></wpt>
+<wpt lat="17.421890" lon="78.33706"><ele>520</ele><time>2024-01-01T10:03:43Z</time></wpt>
+<wpt lat="17.421895" lon="78.33705"><ele>520</ele><time>2024-01-01T10:03:44Z</time></wpt>
+<wpt lat="17.421895" lon="78.33704"><ele>520</ele><time>2024-01-01T10:03:45Z</time></wpt>
+<wpt lat="17.421900" lon="78.33703"><ele>520</ele><time>2024-01-01T10:03:46Z</time></wpt>
+<wpt lat="17.421900" lon="78.33702"><ele>520</ele><time>2024-01-01T10:03:47Z</time></wpt>
+<wpt lat="17.421905" lon="78.33701"><ele>520</ele><time>2024-01-01T10:03:48Z</time></wpt>
+<wpt lat="17.421905" lon="78.33700"><ele>520</ele><time>2024-01-01T10:03:49Z</time></wpt>
+<wpt lat="17.421910" lon="78.33699"><ele>520</ele><time>2024-01-01T10:03:50Z</time></wpt>
+<wpt lat="17.421910" lon="78.33698"><ele>520</ele><time>2024-01-01T10:03:51Z</time></wpt>
+<wpt lat="17.421915" lon="78.33697"><ele>520</ele><time>2024-01-01T10:03:52Z</time></wpt>
+<wpt lat="17.421920" lon="78.33696"><ele>520</ele><time>2024-01-01T10:03:53Z</time></wpt>
+<wpt lat="17.421925" lon="78.33695"><ele>520</ele><time>2024-01-01T10:03:54Z</time></wpt>
+<wpt lat="17.421930" lon="78.33694"><ele>520</ele><time>2024-01-01T10:03:55Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- TRAVEL TO FRANKLIN - sparse -->
+<!-- ============================================ -->
+<wpt lat="17.42200" lon="78.33685"><ele>520</ele><time>2024-01-01T10:04:00Z</time></wpt>
+<wpt lat="17.42210" lon="78.33675"><ele>520</ele><time>2024-01-01T10:04:05Z</time></wpt>
+<wpt lat="17.42220" lon="78.33665"><ele>520</ele><time>2024-01-01T10:04:10Z</time></wpt>
+<wpt lat="17.42230" lon="78.33655"><ele>520</ele><time>2024-01-01T10:04:15Z</time></wpt>
+<wpt lat="17.42240" lon="78.33645"><ele>520</ele><time>2024-01-01T10:04:20Z</time></wpt>
+<wpt lat="17.42250" lon="78.33635"><ele>520</ele><time>2024-01-01T10:04:25Z</time></wpt>
+<wpt lat="17.42260" lon="78.33625"><ele>520</ele><time>2024-01-01T10:04:30Z</time></wpt>
+<wpt lat="17.42268" lon="78.33615"><ele>520</ele><time>2024-01-01T10:04:35Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- FRANKLIN ENTRY BOUNDARY - DENSE (~1m steps) -->
+<!-- Center: 17.422875, 78.335881 -->
+<!-- Approaching from NE -->
+<!-- ============================================ -->
+<wpt lat="17.422750" lon="78.33608"><ele>520</ele><time>2024-01-01T10:04:38Z</time></wpt>
+<wpt lat="17.422760" lon="78.33607"><ele>520</ele><time>2024-01-01T10:04:39Z</time></wpt>
+<wpt lat="17.422770" lon="78.33606"><ele>520</ele><time>2024-01-01T10:04:40Z</time></wpt>
+<wpt lat="17.422780" lon="78.33605"><ele>520</ele><time>2024-01-01T10:04:41Z</time></wpt>
+<wpt lat="17.422790" lon="78.33604"><ele>520</ele><time>2024-01-01T10:04:42Z</time></wpt>
+<wpt lat="17.422800" lon="78.33603"><ele>520</ele><time>2024-01-01T10:04:43Z</time></wpt>
+<!-- ~20m ENTRY BOUNDARY -->
+<wpt lat="17.422810" lon="78.33602"><ele>520</ele><time>2024-01-01T10:04:44Z</time></wpt>
+<wpt lat="17.422815" lon="78.33601"><ele>520</ele><time>2024-01-01T10:04:45Z</time></wpt>
+<wpt lat="17.422820" lon="78.33600"><ele>520</ele><time>2024-01-01T10:04:46Z</time></wpt>
+<wpt lat="17.422825" lon="78.33599"><ele>520</ele><time>2024-01-01T10:04:47Z</time></wpt>
+<wpt lat="17.422830" lon="78.33598"><ele>520</ele><time>2024-01-01T10:04:48Z</time></wpt>
+<wpt lat="17.422835" lon="78.33597"><ele>520</ele><time>2024-01-01T10:04:49Z</time></wpt>
+<wpt lat="17.422840" lon="78.33596"><ele>520</ele><time>2024-01-01T10:04:50Z</time></wpt>
+<wpt lat="17.422845" lon="78.33595"><ele>520</ele><time>2024-01-01T10:04:51Z</time></wpt>
+<wpt lat="17.422850" lon="78.33594"><ele>520</ele><time>2024-01-01T10:04:52Z</time></wpt>
+<wpt lat="17.422855" lon="78.33593"><ele>520</ele><time>2024-01-01T10:04:53Z</time></wpt>
+<wpt lat="17.422860" lon="78.33592"><ele>520</ele><time>2024-01-01T10:04:54Z</time></wpt>
+<wpt lat="17.422865" lon="78.33591"><ele>520</ele><time>2024-01-01T10:04:55Z</time></wpt>
+<wpt lat="17.422870" lon="78.33590"><ele>520</ele><time>2024-01-01T10:04:56Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- INSIDE FRANKLIN - normal pace -->
+<!-- ============================================ -->
+<!-- AT FRANKLIN CENTER 17.422875, 78.335881 -->
+<wpt lat="17.422875" lon="78.33588"><ele>520</ele><time>2024-01-01T10:04:58Z</time></wpt>
+<wpt lat="17.422875" lon="78.33585"><ele>520</ele><time>2024-01-01T10:05:01Z</time></wpt>
+<wpt lat="17.422875" lon="78.33582"><ele>520</ele><time>2024-01-01T10:05:04Z</time></wpt>
+<wpt lat="17.422875" lon="78.33579"><ele>520</ele><time>2024-01-01T10:05:07Z</time></wpt>
+<wpt lat="17.422875" lon="78.33576"><ele>520</ele><time>2024-01-01T10:05:10Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- FRANKLIN EXIT BOUNDARY - DENSE (~1m steps) -->
+<!-- Exiting westward -->
+<!-- ============================================ -->
+<wpt lat="17.422875" lon="78.33574"><ele>520</ele><time>2024-01-01T10:05:12Z</time></wpt>
+<wpt lat="17.422875" lon="78.33573"><ele>520</ele><time>2024-01-01T10:05:13Z</time></wpt>
+<wpt lat="17.422875" lon="78.33572"><ele>520</ele><time>2024-01-01T10:05:14Z</time></wpt>
+<wpt lat="17.422875" lon="78.33571"><ele>520</ele><time>2024-01-01T10:05:15Z</time></wpt>
+<!-- ~20m EXIT BOUNDARY -->
+<wpt lat="17.422875" lon="78.33570"><ele>520</ele><time>2024-01-01T10:05:16Z</time></wpt>
+<wpt lat="17.422875" lon="78.33569"><ele>520</ele><time>2024-01-01T10:05:17Z</time></wpt>
+<wpt lat="17.422875" lon="78.33568"><ele>520</ele><time>2024-01-01T10:05:18Z</time></wpt>
+<wpt lat="17.422875" lon="78.33567"><ele>520</ele><time>2024-01-01T10:05:19Z</time></wpt>
+<wpt lat="17.422875" lon="78.33566"><ele>520</ele><time>2024-01-01T10:05:20Z</time></wpt>
+<wpt lat="17.422875" lon="78.33565"><ele>520</ele><time>2024-01-01T10:05:21Z</time></wpt>
+<wpt lat="17.422875" lon="78.33564"><ele>520</ele><time>2024-01-01T10:05:22Z</time></wpt>
+<wpt lat="17.422875" lon="78.33563"><ele>520</ele><time>2024-01-01T10:05:23Z</time></wpt>
+<wpt lat="17.422875" lon="78.33562"><ele>520</ele><time>2024-01-01T10:05:24Z</time></wpt>
+<wpt lat="17.422875" lon="78.33561"><ele>520</ele><time>2024-01-01T10:05:25Z</time></wpt>
+<wpt lat="17.422875" lon="78.33560"><ele>520</ele><time>2024-01-01T10:05:26Z</time></wpt>
+<wpt lat="17.422875" lon="78.33559"><ele>520</ele><time>2024-01-01T10:05:27Z</time></wpt>
+<wpt lat="17.422875" lon="78.33558"><ele>520</ele><time>2024-01-01T10:05:28Z</time></wpt>
+<wpt lat="17.422875" lon="78.33557"><ele>520</ele><time>2024-01-01T10:05:29Z</time></wpt>
+<wpt lat="17.422875" lon="78.33556"><ele>520</ele><time>2024-01-01T10:05:30Z</time></wpt>
+
+<!-- ============================================ -->
+<!-- CONTINUE WEST - sparse -->
+<!-- ============================================ -->
+<wpt lat="17.42288" lon="78.33550"><ele>520</ele><time>2024-01-01T10:05:35Z</time></wpt>
+<wpt lat="17.42288" lon="78.33540"><ele>520</ele><time>2024-01-01T10:05:40Z</time></wpt>
+<wpt lat="17.42288" lon="78.33530"><ele>520</ele><time>2024-01-01T10:05:45Z</time></wpt>
+<wpt lat="17.42288" lon="78.33520"><ele>520</ele><time>2024-01-01T10:05:50Z</time></wpt>
+<wpt lat="17.42288" lon="78.33510"><ele>520</ele><time>2024-01-01T10:05:55Z</time></wpt>
+<wpt lat="17.42288" lon="78.33500"><ele>520</ele><time>2024-01-01T10:06:00Z</time></wpt>
+<wpt lat="17.42288" lon="78.33490"><ele>520</ele><time>2024-01-01T10:06:05Z</time></wpt>
+<!-- END: Well outside all geofences -->
+
+</gpx>

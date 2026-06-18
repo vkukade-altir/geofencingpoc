@@ -2,6 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:50m.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:20m.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:200m.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:200m.gpx">
+   </FileRef>
+   <FileRef
       location = "group:GeofencingNew.xcodeproj">
    </FileRef>
    <FileRef

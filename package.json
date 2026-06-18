@@ -10,8 +10,15 @@
     "test": "jest"
   },
   "dependencies": {
+    "haversine": "^1.1.1",
     "react": "19.0.0",
-    "react-native": "0.79.5"
+    "react-native": "0.79.5",
+    "react-native-background-geolocation": "^5.1.1",
+    "react-native-maps": "1.24.2",
+    "react-native-mmkv": "^4.3.1",
+    "react-native-nitro-modules": "^0.35.6",
+    "react-native-permissions": "^5.5.1",
+    "react-native-safe-area-context": "^5.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -24,6 +31,7 @@
     "@react-native/eslint-config": "0.79.5",
     "@react-native/metro-config": "0.79.5",
     "@react-native/typescript-config": "0.79.5",
+    "@types/haversine": "^1.1.8",
     "@types/jest": "^29.5.13",
     "@types/react": "^19.0.0",
     "@types/react-test-renderer": "^19.0.0",

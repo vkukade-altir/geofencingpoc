@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="GeofencingNew" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>Capgemini to Sheraton to Franklin - Hyderabad</name>
+    <desc>Route passing through 3 geofences: Capgemini (17.419234, 78.339111) → Sheraton (17.421879, 78.337274) → Franklin (17.422875, 78.335881). Each geofence has 50m radius.</desc>
+  </metadata>
+  <trk>
+    <name>Geofence Test Route</name>
+    <trkseg>
+      <!-- Start: South of Capgemini -->
+      <trkpt lat="17.41789" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:00Z</time></trkpt>
+      <trkpt lat="17.41807" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:02Z</time></trkpt>
+      <trkpt lat="17.41825" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:04Z</time></trkpt>
+      <trkpt lat="17.41842" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:06Z</time></trkpt>
+      <trkpt lat="17.4186" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:08Z</time></trkpt>
+      <trkpt lat="17.41878" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:10Z</time></trkpt>
+      <trkpt lat="17.41893" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:12Z</time></trkpt>
+      <trkpt lat="17.41908" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:14Z</time></trkpt>
+      
+      <!-- ENTER Capgemini (center: 17.419234, 78.339111) -->
+      <trkpt lat="17.41923" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:16Z</time></trkpt>
+      <trkpt lat="17.41938" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:18Z</time></trkpt>
+      <trkpt lat="17.41953" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:20Z</time></trkpt>
+      
+      <!-- EXIT Capgemini, heading towards Sheraton -->
+      <trkpt lat="17.41968" lon="78.33911"><ele>520</ele><time>2024-01-01T10:00:22Z</time></trkpt>
+      <trkpt lat="17.4199" lon="78.33888"><ele>520</ele><time>2024-01-01T10:00:24Z</time></trkpt>
+      <trkpt lat="17.42012" lon="78.33865"><ele>520</ele><time>2024-01-01T10:00:26Z</time></trkpt>
+      <trkpt lat="17.42034" lon="78.33842"><ele>520</ele><time>2024-01-01T10:00:28Z</time></trkpt>
+      <trkpt lat="17.42056" lon="78.33819"><ele>520</ele><time>2024-01-01T10:00:30Z</time></trkpt>
+      <trkpt lat="17.42077" lon="78.33796"><ele>520</ele><time>2024-01-01T10:00:32Z</time></trkpt>
+      <trkpt lat="17.42099" lon="78.33773"><ele>520</ele><time>2024-01-01T10:00:34Z</time></trkpt>
+      <trkpt lat="17.42121" lon="78.3375"><ele>520</ele><time>2024-01-01T10:00:36Z</time></trkpt>
+      <trkpt lat="17.42143" lon="78.33727"><ele>520</ele><time>2024-01-01T10:00:38Z</time></trkpt>
+      <trkpt lat="17.42158" lon="78.33727"><ele>520</ele><time>2024-01-01T10:00:40Z</time></trkpt>
+      <trkpt lat="17.42173" lon="78.33727"><ele>520</ele><time>2024-01-01T10:00:42Z</time></trkpt>
+      
+      <!-- ENTER Sheraton (center: 17.421879, 78.337274) -->
+      <trkpt lat="17.42188" lon="78.33727"><ele>520</ele><time>2024-01-01T10:00:44Z</time></trkpt>
+      <trkpt lat="17.42203" lon="78.33727"><ele>520</ele><time>2024-01-01T10:00:46Z</time></trkpt>
+      <trkpt lat="17.42218" lon="78.33727"><ele>520</ele><time>2024-01-01T10:00:48Z</time></trkpt>
+      
+      <!-- EXIT Sheraton, heading towards Franklin -->
+      <trkpt lat="17.42233" lon="78.33727"><ele>520</ele><time>2024-01-01T10:00:50Z</time></trkpt>
+      <trkpt lat="17.4224" lon="78.33715"><ele>520</ele><time>2024-01-01T10:00:52Z</time></trkpt>
+      <trkpt lat="17.42247" lon="78.33704"><ele>520</ele><time>2024-01-01T10:00:54Z</time></trkpt>
+      <trkpt lat="17.42254" lon="78.33693"><ele>520</ele><time>2024-01-01T10:00:56Z</time></trkpt>
+      <trkpt lat="17.4226" lon="78.33681"><ele>520</ele><time>2024-01-01T10:00:58Z</time></trkpt>
+      <trkpt lat="17.42267" lon="78.33669"><ele>520</ele><time>2024-01-01T10:01:00Z</time></trkpt>
+      <trkpt lat="17.42274" lon="78.33658"><ele>520</ele><time>2024-01-01T10:01:02Z</time></trkpt>
+      <trkpt lat="17.42281" lon="78.33647"><ele>520</ele><time>2024-01-01T10:01:04Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33635"><ele>520</ele><time>2024-01-01T10:01:06Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33619"><ele>520</ele><time>2024-01-01T10:01:08Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33604"><ele>520</ele><time>2024-01-01T10:01:10Z</time></trkpt>
+      
+      <!-- ENTER Franklin (center: 17.422875, 78.335881) -->
+      <trkpt lat="17.42288" lon="78.33588"><ele>520</ele><time>2024-01-01T10:01:12Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33572"><ele>520</ele><time>2024-01-01T10:01:14Z</time></trkpt>
+      
+      <!-- EXIT Franklin, continue west -->
+      <trkpt lat="17.42288" lon="78.33557"><ele>520</ele><time>2024-01-01T10:01:16Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33541"><ele>520</ele><time>2024-01-01T10:01:18Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33517"><ele>520</ele><time>2024-01-01T10:01:20Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33494"><ele>520</ele><time>2024-01-01T10:01:22Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.3347"><ele>520</ele><time>2024-01-01T10:01:24Z</time></trkpt>
+      <trkpt lat="17.42288" lon="78.33447"><ele>520</ele><time>2024-01-01T10:01:26Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

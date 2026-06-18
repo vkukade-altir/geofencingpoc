@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="GeofencingNew" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>200m Geofence Route - Hyderabad</name>
+    <desc>Route through 3 non-overlapping 200m geofences (~600m apart). EV_Station_A (17.4190, 78.3400) → EV_Station_B (17.4235, 78.3355) → EV_Station_C (17.4280, 78.3310)</desc>
+  </metadata>
+  <trk>
+    <name>200m Radius Test Route</name>
+    <trkseg>
+      <!-- ============================================ -->
+      <!-- APPROACH TO EV_STATION_A -->
+      <!-- Starting ~300m south-east of center -->
+      <!-- Center: 17.4190, 78.3400 -->
+      <!-- ============================================ -->
+      <trkpt lat="17.4165" lon="78.3415"><ele>520</ele><time>2024-01-01T10:00:00Z</time></trkpt>
+      <trkpt lat="17.4167" lon="78.3413"><ele>520</ele><time>2024-01-01T10:00:03Z</time></trkpt>
+      <trkpt lat="17.4169" lon="78.3411"><ele>520</ele><time>2024-01-01T10:00:06Z</time></trkpt>
+      <trkpt lat="17.4171" lon="78.3409"><ele>520</ele><time>2024-01-01T10:00:09Z</time></trkpt>
+      <trkpt lat="17.4173" lon="78.3407"><ele>520</ele><time>2024-01-01T10:00:12Z</time></trkpt>
+      <trkpt lat="17.4175" lon="78.3405"><ele>520</ele><time>2024-01-01T10:00:15Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- ENTERING EV_STATION_A 200m zone -->
+      <!-- ============================================ -->
+      <trkpt lat="17.4177" lon="78.3404"><ele>520</ele><time>2024-01-01T10:00:18Z</time></trkpt>
+      <trkpt lat="17.4178" lon="78.3403"><ele>520</ele><time>2024-01-01T10:00:21Z</time></trkpt>
+      <trkpt lat="17.4179" lon="78.3402"><ele>520</ele><time>2024-01-01T10:00:24Z</time></trkpt>
+      <trkpt lat="17.4180" lon="78.3402"><ele>520</ele><time>2024-01-01T10:00:27Z</time></trkpt>
+      <trkpt lat="17.4181" lon="78.3401"><ele>520</ele><time>2024-01-01T10:00:30Z</time></trkpt>
+      <trkpt lat="17.4182" lon="78.3401"><ele>520</ele><time>2024-01-01T10:00:33Z</time></trkpt>
+      <trkpt lat="17.4183" lon="78.3401"><ele>520</ele><time>2024-01-01T10:00:36Z</time></trkpt>
+      <trkpt lat="17.4184" lon="78.3401"><ele>520</ele><time>2024-01-01T10:00:39Z</time></trkpt>
+      <trkpt lat="17.4185" lon="78.3400"><ele>520</ele><time>2024-01-01T10:00:42Z</time></trkpt>
+      <trkpt lat="17.4186" lon="78.3400"><ele>520</ele><time>2024-01-01T10:00:45Z</time></trkpt>
+      <trkpt lat="17.4187" lon="78.3400"><ele>520</ele><time>2024-01-01T10:00:48Z</time></trkpt>
+      <trkpt lat="17.4188" lon="78.3400"><ele>520</ele><time>2024-01-01T10:00:51Z</time></trkpt>
+      <trkpt lat="17.4189" lon="78.3400"><ele>520</ele><time>2024-01-01T10:00:54Z</time></trkpt>
+      <!-- AT EV_STATION_A CENTER -->
+      <trkpt lat="17.4190" lon="78.3400"><ele>520</ele><time>2024-01-01T10:00:57Z</time></trkpt>
+      <trkpt lat="17.4191" lon="78.3400"><ele>520</ele><time>2024-01-01T10:01:00Z</time></trkpt>
+      <trkpt lat="17.4192" lon="78.3400"><ele>520</ele><time>2024-01-01T10:01:03Z</time></trkpt>
+      <trkpt lat="17.4193" lon="78.3399"><ele>520</ele><time>2024-01-01T10:01:06Z</time></trkpt>
+      <trkpt lat="17.4194" lon="78.3399"><ele>520</ele><time>2024-01-01T10:01:09Z</time></trkpt>
+      <trkpt lat="17.4195" lon="78.3398"><ele>520</ele><time>2024-01-01T10:01:12Z</time></trkpt>
+      <trkpt lat="17.4196" lon="78.3398"><ele>520</ele><time>2024-01-01T10:01:15Z</time></trkpt>
+      <trkpt lat="17.4197" lon="78.3397"><ele>520</ele><time>2024-01-01T10:01:18Z</time></trkpt>
+      <trkpt lat="17.4198" lon="78.3396"><ele>520</ele><time>2024-01-01T10:01:21Z</time></trkpt>
+      <trkpt lat="17.4199" lon="78.3395"><ele>520</ele><time>2024-01-01T10:01:24Z</time></trkpt>
+      <trkpt lat="17.4200" lon="78.3394"><ele>520</ele><time>2024-01-01T10:01:27Z</time></trkpt>
+      <trkpt lat="17.4201" lon="78.3393"><ele>520</ele><time>2024-01-01T10:01:30Z</time></trkpt>
+      <trkpt lat="17.4202" lon="78.3392"><ele>520</ele><time>2024-01-01T10:01:33Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- EXITING EV_STATION_A, traveling to EV_STATION_B -->
+      <!-- ~600m journey -->
+      <!-- ============================================ -->
+      <trkpt lat="17.4203" lon="78.3391"><ele>520</ele><time>2024-01-01T10:01:36Z</time></trkpt>
+      <trkpt lat="17.4204" lon="78.3390"><ele>520</ele><time>2024-01-01T10:01:39Z</time></trkpt>
+      <trkpt lat="17.4205" lon="78.3389"><ele>520</ele><time>2024-01-01T10:01:42Z</time></trkpt>
+      <trkpt lat="17.4206" lon="78.3388"><ele>520</ele><time>2024-01-01T10:01:45Z</time></trkpt>
+      <trkpt lat="17.4207" lon="78.3387"><ele>520</ele><time>2024-01-01T10:01:48Z</time></trkpt>
+      <trkpt lat="17.4208" lon="78.3386"><ele>520</ele><time>2024-01-01T10:01:51Z</time></trkpt>
+      <trkpt lat="17.4209" lon="78.3385"><ele>520</ele><time>2024-01-01T10:01:54Z</time></trkpt>
+      <trkpt lat="17.4210" lon="78.3384"><ele>520</ele><time>2024-01-01T10:01:57Z</time></trkpt>
+      <trkpt lat="17.4211" lon="78.3383"><ele>520</ele><time>2024-01-01T10:02:00Z</time></trkpt>
+      <trkpt lat="17.4212" lon="78.3382"><ele>520</ele><time>2024-01-01T10:02:03Z</time></trkpt>
+      <trkpt lat="17.4213" lon="78.3381"><ele>520</ele><time>2024-01-01T10:02:06Z</time></trkpt>
+      <trkpt lat="17.4214" lon="78.3380"><ele>520</ele><time>2024-01-01T10:02:09Z</time></trkpt>
+      <trkpt lat="17.4215" lon="78.3379"><ele>520</ele><time>2024-01-01T10:02:12Z</time></trkpt>
+      <trkpt lat="17.4216" lon="78.3378"><ele>520</ele><time>2024-01-01T10:02:15Z</time></trkpt>
+      <trkpt lat="17.4217" lon="78.3377"><ele>520</ele><time>2024-01-01T10:02:18Z</time></trkpt>
+      <trkpt lat="17.4218" lon="78.3376"><ele>520</ele><time>2024-01-01T10:02:21Z</time></trkpt>
+      <trkpt lat="17.4219" lon="78.3375"><ele>520</ele><time>2024-01-01T10:02:24Z</time></trkpt>
+      <trkpt lat="17.4220" lon="78.3374"><ele>520</ele><time>2024-01-01T10:02:27Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- ENTERING EV_STATION_B 200m zone -->
+      <!-- Center: 17.4235, 78.3355 -->
+      <!-- ============================================ -->
+      <trkpt lat="17.4221" lon="78.3373"><ele>520</ele><time>2024-01-01T10:02:30Z</time></trkpt>
+      <trkpt lat="17.4222" lon="78.3372"><ele>520</ele><time>2024-01-01T10:02:33Z</time></trkpt>
+      <trkpt lat="17.4223" lon="78.3371"><ele>520</ele><time>2024-01-01T10:02:36Z</time></trkpt>
+      <trkpt lat="17.4224" lon="78.3370"><ele>520</ele><time>2024-01-01T10:02:39Z</time></trkpt>
+      <trkpt lat="17.4225" lon="78.3369"><ele>520</ele><time>2024-01-01T10:02:42Z</time></trkpt>
+      <trkpt lat="17.4226" lon="78.3368"><ele>520</ele><time>2024-01-01T10:02:45Z</time></trkpt>
+      <trkpt lat="17.4227" lon="78.3367"><ele>520</ele><time>2024-01-01T10:02:48Z</time></trkpt>
+      <trkpt lat="17.4228" lon="78.3366"><ele>520</ele><time>2024-01-01T10:02:51Z</time></trkpt>
+      <trkpt lat="17.4229" lon="78.3365"><ele>520</ele><time>2024-01-01T10:02:54Z</time></trkpt>
+      <trkpt lat="17.4230" lon="78.3364"><ele>520</ele><time>2024-01-01T10:02:57Z</time></trkpt>
+      <trkpt lat="17.4231" lon="78.3363"><ele>520</ele><time>2024-01-01T10:03:00Z</time></trkpt>
+      <trkpt lat="17.4232" lon="78.3362"><ele>520</ele><time>2024-01-01T10:03:03Z</time></trkpt>
+      <trkpt lat="17.4233" lon="78.3361"><ele>520</ele><time>2024-01-01T10:03:06Z</time></trkpt>
+      <trkpt lat="17.4234" lon="78.3360"><ele>520</ele><time>2024-01-01T10:03:09Z</time></trkpt>
+      <!-- AT EV_STATION_B CENTER -->
+      <trkpt lat="17.4235" lon="78.3355"><ele>520</ele><time>2024-01-01T10:03:12Z</time></trkpt>
+      <trkpt lat="17.4236" lon="78.3354"><ele>520</ele><time>2024-01-01T10:03:15Z</time></trkpt>
+      <trkpt lat="17.4237" lon="78.3353"><ele>520</ele><time>2024-01-01T10:03:18Z</time></trkpt>
+      <trkpt lat="17.4238" lon="78.3352"><ele>520</ele><time>2024-01-01T10:03:21Z</time></trkpt>
+      <trkpt lat="17.4239" lon="78.3351"><ele>520</ele><time>2024-01-01T10:03:24Z</time></trkpt>
+      <trkpt lat="17.4240" lon="78.3350"><ele>520</ele><time>2024-01-01T10:03:27Z</time></trkpt>
+      <trkpt lat="17.4241" lon="78.3349"><ele>520</ele><time>2024-01-01T10:03:30Z</time></trkpt>
+      <trkpt lat="17.4242" lon="78.3348"><ele>520</ele><time>2024-01-01T10:03:33Z</time></trkpt>
+      <trkpt lat="17.4243" lon="78.3347"><ele>520</ele><time>2024-01-01T10:03:36Z</time></trkpt>
+      <trkpt lat="17.4244" lon="78.3346"><ele>520</ele><time>2024-01-01T10:03:39Z</time></trkpt>
+      <trkpt lat="17.4245" lon="78.3345"><ele>520</ele><time>2024-01-01T10:03:42Z</time></trkpt>
+      <trkpt lat="17.4246" lon="78.3344"><ele>520</ele><time>2024-01-01T10:03:45Z</time></trkpt>
+      <trkpt lat="17.4247" lon="78.3343"><ele>520</ele><time>2024-01-01T10:03:48Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- EXITING EV_STATION_B, traveling to EV_STATION_C -->
+      <!-- ~600m journey -->
+      <!-- ============================================ -->
+      <trkpt lat="17.4248" lon="78.3342"><ele>520</ele><time>2024-01-01T10:03:51Z</time></trkpt>
+      <trkpt lat="17.4249" lon="78.3341"><ele>520</ele><time>2024-01-01T10:03:54Z</time></trkpt>
+      <trkpt lat="17.4250" lon="78.3340"><ele>520</ele><time>2024-01-01T10:03:57Z</time></trkpt>
+      <trkpt lat="17.4251" lon="78.3339"><ele>520</ele><time>2024-01-01T10:04:00Z</time></trkpt>
+      <trkpt lat="17.4252" lon="78.3338"><ele>520</ele><time>2024-01-01T10:04:03Z</time></trkpt>
+      <trkpt lat="17.4253" lon="78.3337"><ele>520</ele><time>2024-01-01T10:04:06Z</time></trkpt>
+      <trkpt lat="17.4254" lon="78.3336"><ele>520</ele><time>2024-01-01T10:04:09Z</time></trkpt>
+      <trkpt lat="17.4255" lon="78.3335"><ele>520</ele><time>2024-01-01T10:04:12Z</time></trkpt>
+      <trkpt lat="17.4256" lon="78.3334"><ele>520</ele><time>2024-01-01T10:04:15Z</time></trkpt>
+      <trkpt lat="17.4257" lon="78.3333"><ele>520</ele><time>2024-01-01T10:04:18Z</time></trkpt>
+      <trkpt lat="17.4258" lon="78.3332"><ele>520</ele><time>2024-01-01T10:04:21Z</time></trkpt>
+      <trkpt lat="17.4259" lon="78.3331"><ele>520</ele><time>2024-01-01T10:04:24Z</time></trkpt>
+      <trkpt lat="17.4260" lon="78.3330"><ele>520</ele><time>2024-01-01T10:04:27Z</time></trkpt>
+      <trkpt lat="17.4261" lon="78.3329"><ele>520</ele><time>2024-01-01T10:04:30Z</time></trkpt>
+      <trkpt lat="17.4262" lon="78.3328"><ele>520</ele><time>2024-01-01T10:04:33Z</time></trkpt>
+      <trkpt lat="17.4263" lon="78.3327"><ele>520</ele><time>2024-01-01T10:04:36Z</time></trkpt>
+      <trkpt lat="17.4264" lon="78.3326"><ele>520</ele><time>2024-01-01T10:04:39Z</time></trkpt>
+      <trkpt lat="17.4265" lon="78.3325"><ele>520</ele><time>2024-01-01T10:04:42Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- ENTERING EV_STATION_C 200m zone -->
+      <!-- Center: 17.4280, 78.3310 -->
+      <!-- ============================================ -->
+      <trkpt lat="17.4266" lon="78.3324"><ele>520</ele><time>2024-01-01T10:04:45Z</time></trkpt>
+      <trkpt lat="17.4267" lon="78.3323"><ele>520</ele><time>2024-01-01T10:04:48Z</time></trkpt>
+      <trkpt lat="17.4268" lon="78.3322"><ele>520</ele><time>2024-01-01T10:04:51Z</time></trkpt>
+      <trkpt lat="17.4269" lon="78.3321"><ele>520</ele><time>2024-01-01T10:04:54Z</time></trkpt>
+      <trkpt lat="17.4270" lon="78.3320"><ele>520</ele><time>2024-01-01T10:04:57Z</time></trkpt>
+      <trkpt lat="17.4271" lon="78.3319"><ele>520</ele><time>2024-01-01T10:05:00Z</time></trkpt>
+      <trkpt lat="17.4272" lon="78.3318"><ele>520</ele><time>2024-01-01T10:05:03Z</time></trkpt>
+      <trkpt lat="17.4273" lon="78.3317"><ele>520</ele><time>2024-01-01T10:05:06Z</time></trkpt>
+      <trkpt lat="17.4274" lon="78.3316"><ele>520</ele><time>2024-01-01T10:05:09Z</time></trkpt>
+      <trkpt lat="17.4275" lon="78.3315"><ele>520</ele><time>2024-01-01T10:05:12Z</time></trkpt>
+      <trkpt lat="17.4276" lon="78.3314"><ele>520</ele><time>2024-01-01T10:05:15Z</time></trkpt>
+      <trkpt lat="17.4277" lon="78.3313"><ele>520</ele><time>2024-01-01T10:05:18Z</time></trkpt>
+      <trkpt lat="17.4278" lon="78.3312"><ele>520</ele><time>2024-01-01T10:05:21Z</time></trkpt>
+      <trkpt lat="17.4279" lon="78.3311"><ele>520</ele><time>2024-01-01T10:05:24Z</time></trkpt>
+      <!-- AT EV_STATION_C CENTER -->
+      <trkpt lat="17.4280" lon="78.3310"><ele>520</ele><time>2024-01-01T10:05:27Z</time></trkpt>
+      <trkpt lat="17.4281" lon="78.3309"><ele>520</ele><time>2024-01-01T10:05:30Z</time></trkpt>
+      <trkpt lat="17.4282" lon="78.3308"><ele>520</ele><time>2024-01-01T10:05:33Z</time></trkpt>
+      <trkpt lat="17.4283" lon="78.3307"><ele>520</ele><time>2024-01-01T10:05:36Z</time></trkpt>
+      <trkpt lat="17.4284" lon="78.3306"><ele>520</ele><time>2024-01-01T10:05:39Z</time></trkpt>
+      <trkpt lat="17.4285" lon="78.3305"><ele>520</ele><time>2024-01-01T10:05:42Z</time></trkpt>
+      <trkpt lat="17.4286" lon="78.3304"><ele>520</ele><time>2024-01-01T10:05:45Z</time></trkpt>
+      <trkpt lat="17.4287" lon="78.3303"><ele>520</ele><time>2024-01-01T10:05:48Z</time></trkpt>
+      <trkpt lat="17.4288" lon="78.3302"><ele>520</ele><time>2024-01-01T10:05:51Z</time></trkpt>
+      <trkpt lat="17.4289" lon="78.3301"><ele>520</ele><time>2024-01-01T10:05:54Z</time></trkpt>
+      <trkpt lat="17.4290" lon="78.3300"><ele>520</ele><time>2024-01-01T10:05:57Z</time></trkpt>
+      <trkpt lat="17.4291" lon="78.3299"><ele>520</ele><time>2024-01-01T10:06:00Z</time></trkpt>
+      <trkpt lat="17.4292" lon="78.3298"><ele>520</ele><time>2024-01-01T10:06:03Z</time></trkpt>
+      
+      <!-- ============================================ -->
+      <!-- EXITING EV_STATION_C, continuing north-west -->
+      <!-- ============================================ -->
+      <trkpt lat="17.4293" lon="78.3297"><ele>520</ele><time>2024-01-01T10:06:06Z</time></trkpt>
+      <trkpt lat="17.4294" lon="78.3296"><ele>520</ele><time>2024-01-01T10:06:09Z</time></trkpt>
+      <trkpt lat="17.4295" lon="78.3295"><ele>520</ele><time>2024-01-01T10:06:12Z</time></trkpt>
+      <trkpt lat="17.4296" lon="78.3294"><ele>520</ele><time>2024-01-01T10:06:15Z</time></trkpt>
+      <trkpt lat="17.4297" lon="78.3293"><ele>520</ele><time>2024-01-01T10:06:18Z</time></trkpt>
+      <trkpt lat="17.4298" lon="78.3292"><ele>520</ele><time>2024-01-01T10:06:21Z</time></trkpt>
+      <trkpt lat="17.4299" lon="78.3291"><ele>520</ele><time>2024-01-01T10:06:24Z</time></trkpt>
+      <trkpt lat="17.4300" lon="78.3290"><ele>520</ele><time>2024-01-01T10:06:27Z</time></trkpt>
+      <trkpt lat="17.4301" lon="78.3289"><ele>520</ele><time>2024-01-01T10:06:30Z</time></trkpt>
+      <trkpt lat="17.4302" lon="78.3288"><ele>520</ele><time>2024-01-01T10:06:33Z</time></trkpt>
+      <trkpt lat="17.4303" lon="78.3287"><ele>520</ele><time>2024-01-01T10:06:36Z</time></trkpt>
+      <trkpt lat="17.4304" lon="78.3286"><ele>520</ele><time>2024-01-01T10:06:39Z</time></trkpt>
+      <trkpt lat="17.4305" lon="78.3285"><ele>520</ele><time>2024-01-01T10:06:42Z</time></trkpt>
+      <!-- END: Well outside all geofences -->
+    </trkseg>
+  </trk>
+</gpx>
