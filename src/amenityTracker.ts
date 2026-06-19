@@ -59,6 +59,18 @@ export interface AmenityEvent {
   };
 }
 
+function logAmenityTransition(event: AmenityEvent): void {
+  log(`[AmenityTracker] ${event.type}`, {
+    amenityId: event.amenityId,
+    amenityName: event.amenityName,
+    stationId: event.stationId,
+    lat: event.location.latitude,
+    lon: event.location.longitude,
+    accuracy: event.location.accuracy,
+    timestamp: event.timestamp,
+  });
+}
+
 export interface LocationUpdate {
   latitude: number;
   longitude: number;
@@ -236,8 +248,6 @@ export function restoreState(): boolean {
         amenityStates,
         lastLocation: persisted.lastLocation,
       });
-
-      log('[AmenityTracker] Restored state for station:', persisted.stationId);
     }
 
     return trackingStates.size > 0;
@@ -302,7 +312,7 @@ export function onStationEnter(stationId: string): void {
     return;
   }
 
-  log('[AmenityTracker] Station ENTER:', stationId, '- Starting amenity tracking');
+  log('[AmenityTracker] STATION_ENTER', {stationId});
 
   // Initialize tracking state for this station
   const amenityStates = new Map<string, AmenityState>();
@@ -333,7 +343,7 @@ export function onStationEnter(stationId: string): void {
  * Cleans up amenity tracking and fires any pending EXIT events
  */
 export function onStationExit(stationId: string): void {
-  log('[AmenityTracker] Station EXIT:', stationId, '- Stopping amenity tracking');
+  log('[AmenityTracker] STATION_EXIT', {stationId});
 
   const state = trackingStates.get(stationId);
   if (state) {
@@ -343,7 +353,7 @@ export function onStationExit(stationId: string): void {
         const station = getStationById(stationId);
         const amenity = station?.amenities.find(a => a.id === amenityId);
         if (amenity) {
-          emitEvent({
+          const event: AmenityEvent = {
             type: 'AMENITY_EXIT',
             stationId,
             amenityId,
@@ -354,7 +364,9 @@ export function onStationExit(stationId: string): void {
               longitude: 0,
               accuracy: 0,
             },
-          });
+          };
+          emitEvent(event);
+          logAmenityTransition(event);
         }
       }
     }
@@ -376,11 +388,6 @@ export function processLocation(location: LocationUpdate): AmenityEvent[] {
 
   // Check accuracy gate
   if (location.accuracy > CONFIG.MAX_ACCURACY_METERS) {
-    log(
-      '[AmenityTracker] Ignoring location - accuracy over threshold',
-      location.accuracy,
-      CONFIG.MAX_ACCURACY_METERS,
-    );
     return events;
   }
 
@@ -409,17 +416,6 @@ export function processLocation(location: LocationUpdate): AmenityEvent[] {
         amenityState.isInside,
       );
 
-      log('[AmenityTracker] Amenity check:', {
-        amenityId: amenity.id,
-        amenityName: amenity.name,
-        isCurrentlyInside,
-        isInside: amenityState.isInside,
-        inCount: amenityState.consecutiveInsideCount,
-        outCount: amenityState.consecutiveOutsideCount,
-        lat: location.latitude,
-        lon: location.longitude,
-      });
-
       if (isCurrentlyInside) {
         amenityState.consecutiveInsideCount++;
         amenityState.consecutiveOutsideCount = 0;
@@ -445,17 +441,16 @@ export function processLocation(location: LocationUpdate): AmenityEvent[] {
           };
           events.push(event);
           emitEvent(event);
-
-          log(
-            '[AmenityTracker] AMENITY_ENTER:',
-            amenity.name,
-            'at station',
-            stationId,
-          );
+          logAmenityTransition(event);
         }
       } else {
-        amenityState.consecutiveOutsideCount++;
         amenityState.consecutiveInsideCount = 0;
+
+        if (amenityState.isInside) {
+          amenityState.consecutiveOutsideCount++;
+        } else {
+          amenityState.consecutiveOutsideCount = 0;
+        }
 
         if (
           amenityState.isInside &&
@@ -479,13 +474,7 @@ export function processLocation(location: LocationUpdate): AmenityEvent[] {
           };
           events.push(event);
           emitEvent(event);
-
-          log(
-            '[AmenityTracker] AMENITY_EXIT:',
-            amenity.name,
-            'at station',
-            stationId,
-          );
+          logAmenityTransition(event);
         }
       }
     }
@@ -636,13 +625,6 @@ export function processGeofenceEventHeadless(
   stationId: string,
   location: LocationUpdate,
 ): void {
-  log(
-    '[AmenityTracker:Headless] Processing geofence',
-    action,
-    'for',
-    stationId,
-  );
-
   if (action === 'ENTER') {
     onStationEnter(stationId);
     // Process the initial location
@@ -660,7 +642,6 @@ export function processLocationHeadless(
   location: LocationUpdate,
 ): AmenityEvent[] {
   if (!isTrackingActive()) {
-    log('[AmenityTracker:Headless] Not tracking, skipping location');
     return [];
   }
 
@@ -674,10 +655,7 @@ export function processLocationHeadless(
 export function processHeartbeatHeadless(
   location: LocationUpdate,
 ): AmenityEvent[] {
-  log('[AmenityTracker:Headless] Processing heartbeat');
-
   if (!isTrackingActive()) {
-    log('[AmenityTracker:Headless] Not inside station, skipping heartbeat');
     return [];
   }
 

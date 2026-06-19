@@ -61,7 +61,7 @@
          </BuildableReference>
       </BuildableProductRunnable>
       <LocationScenarioReference
-         identifier = "../50m.gpx"
+         identifier = "../station_amenity_test.gpx"
          referenceType = "0">
       </LocationScenarioReference>
    </LaunchAction>

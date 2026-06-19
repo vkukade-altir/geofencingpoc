@@ -26,7 +26,6 @@ import {
   Station,
   Amenity,
 } from './stationData';
-import BackgroundFetch from 'react-native-background-fetch';
 import {
   onStationEnter,
   onStationExit,
@@ -51,6 +50,7 @@ const CONFIG_BATTERY_EFFICIENT = {
   distanceFilter: 10,
   stopTimeout: 1,
   heartbeatInterval: 60,
+  preventSuspend: false,
 };
 
 // Aggressive tracking config (inside stations for amenity detection)
@@ -58,6 +58,7 @@ const CONFIG_STATION_TRACKING = {
   distanceFilter: 2,
   stopTimeout: 1, // 1 minute — for stationary + heartbeat testing
   heartbeatInterval: 15,
+  preventSuspend: true, // iOS: keep app awake for heartbeats while stationary at amenities
 };
 
 const GEOFENCE_RADIUS_METERS = 100;
@@ -315,11 +316,7 @@ export const Geofencing = () => {
 
       // Switch to aggressive tracking config for amenity detection
       log('[Config] Switching to station tracking mode');
-      BackgroundGeolocation.setConfig({
-        distanceFilter: CONFIG_STATION_TRACKING.distanceFilter,
-        stopTimeout: CONFIG_STATION_TRACKING.stopTimeout,
-        heartbeatInterval: CONFIG_STATION_TRACKING.heartbeatInterval,
-      });
+      BackgroundGeolocation.setConfig(CONFIG_STATION_TRACKING);
     } else {
       log('❌❌ Station EXIT:', event.identifier);
       onStationExit(event.identifier);
@@ -327,11 +324,7 @@ export const Geofencing = () => {
 
       // Switch back to battery-efficient config
       log('[Config] Switching to battery-efficient mode');
-      BackgroundGeolocation.setConfig({
-        distanceFilter: CONFIG_BATTERY_EFFICIENT.distanceFilter,
-        stopTimeout: CONFIG_BATTERY_EFFICIENT.stopTimeout,
-        heartbeatInterval: CONFIG_BATTERY_EFFICIENT.heartbeatInterval,
-      });
+      BackgroundGeolocation.setConfig(CONFIG_BATTERY_EFFICIENT);
     }
 
     log(
@@ -358,34 +351,6 @@ export const Geofencing = () => {
   const unsubscribe = () => {
     subscriptions.forEach((subscription: any) => subscription.remove());
     subscriptions.splice(0, subscriptions.length);
-  };
-
-  const initBackgroundFetch = async () => {
-    BackgroundFetch.configure(
-      {
-        minimumFetchInterval: 15,
-        enableHeadless: true,
-        stopOnTerminate: false,
-      },
-      async taskId => {
-        log('[BackgroundFetch]', taskId);
-        const location = await BackgroundGeolocation.getCurrentPosition({
-          extras: {
-            event: 'background-fetch',
-          },
-          maximumAge: 10000,
-          persist: true,
-          timeout: 30,
-          samples: 2,
-        });
-        log('BACKGROUND FETCH: [getCurrentPosition]', location);
-        BackgroundFetch.finish(taskId);
-      },
-      async taskId => {
-        log('[BackgroundFetch] TIMEOUT:', taskId);
-        BackgroundFetch.finish(taskId);
-      },
-    );
   };
 
   useEffect(() => {
@@ -528,8 +493,6 @@ export const Geofencing = () => {
 
       log('Making BackgroundGeolocation ready with config');
 
-      initBackgroundFetch();
-
       const state: State = await BackgroundGeolocation.ready({
         reset: false,
         logger: {
@@ -549,6 +512,7 @@ export const Geofencing = () => {
           startOnBoot: true,
           enableHeadless: true,
           heartbeatInterval: CONFIG_BATTERY_EFFICIENT.heartbeatInterval,
+          preventSuspend: false,
           backgroundPermissionRationale: {
             title:
               "Allow {applicationName} to access this device's location even when closed or not in use.",
@@ -583,6 +547,10 @@ export const Geofencing = () => {
         await registerGeofences();
       } catch (error) {
         logError('[Geofences] Registration failed:', error);
+      }
+
+      if (wasRestored && isTrackingActive()) {
+        await BackgroundGeolocation.setConfig(CONFIG_STATION_TRACKING);
       }
 
       setEnabled(state.enabled);
