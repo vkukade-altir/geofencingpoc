@@ -21,7 +21,7 @@ const CONFIG_BATTERY_EFFICIENT = {
   distanceFilter: 10,
   stopTimeout: 1,
   heartbeatInterval: 60,
-  preventSuspend: false,
+  preventSuspend: true,
 };
 
 const CONFIG_STATION_TRACKING = {

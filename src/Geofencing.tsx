@@ -50,7 +50,7 @@ const CONFIG_BATTERY_EFFICIENT = {
   distanceFilter: 10,
   stopTimeout: 1,
   heartbeatInterval: 60,
-  preventSuspend: false,
+  preventSuspend: true,
 };
 
 // Aggressive tracking config (inside stations for amenity detection)
@@ -327,11 +327,7 @@ export const Geofencing = () => {
       BackgroundGeolocation.setConfig(CONFIG_BATTERY_EFFICIENT);
     }
 
-    log(
-      'Coordinates - lat,long',
-      loc.coords.latitude,
-      loc.coords.longitude,
-    );
+    log('Coordinates - lat,long', loc.coords.latitude, loc.coords.longitude);
     log('haversine distance to station center', haversinDistance);
   };
 
